@@ -1,0 +1,104 @@
+<!DOCTYPE rkplugin >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<code file="SummaryTablegtsummary.js" />
+	<help file="SummaryTablegtsummary.rkh" />
+	<!--
+		<dependencies>
+		</dependencies>
+	-->
+	<logic>
+		<!--
+			<convert id="!edit!" sources="!edit!" mode="equals" standard="!edit!" />
+		-->
+		<!--
+			<connect governor="!edit!.state" client="!edit!.enabled" />
+		-->
+	</logic>
+	<dialog label="Summary Table (tbl_summary)">
+		<row id="row_cDDDDDVOID">
+			<column id="clm_vrslctrdsD">
+				<varselector id="slc_tbl_summary_source" label="Data frames" />
+			</column>
+			<column id="clm_tDDDVOIDVO">
+				<tabbook>
+					<tab label="Data" id="tab_Data">
+						<column id="clm_vrsltdDVOI">
+							<varslot id="var_tbl_summary_data" label="Data frame to summarize" source="slc_tbl_summary_source" classes="data.frame" required="true" />
+							<varslot id="var_tbl_summary_include" label="Variables to include" source="slc_tbl_summary_source" multi="true" />
+							<varslot id="var_tbl_summary_strata" label="Outer stratification (strata)" source="slc_tbl_summary_source" />
+							<varslot id="var_tbl_summary_by" label="Inner stratification (by)" source="slc_tbl_summary_source" />
+						</column>
+					</tab>
+					<tab label="Statistics" id="tab_Statstcs">
+						<column id="clm_iS2575DPCR">
+							<input label="Statistic formula" id="inp_statistic" initial="list(all_continuous() ~ '{median} ({p25}, {p75})', all_categorical() ~ '{n} ({p}%)')" />
+							<input label="Digits formula" id="inp_digits" />
+							<dropdown id="drp_percent" label="Percentage basis (percent)">
+								<option label="Column" value="column" checked="true" />
+								<option label="Row" value="row" />
+								<option label="Cell" value="cell" />
+							</dropdown>
+							<input label="Type formula" id="inp_type" />
+						</column>
+					</tab>
+					<tab label="Labels &amp; Missing" id="tab_LblsMssn">
+						<column id="clm_fVLVLURKW1">
+							<frame label="Variable Labels" id="frm_VrblLbls">
+								<checkbox id="cbox_use_rk_labels" label="Use RKWard variable labels (rk.get.label)" value="1" checked="true" />
+								<input label="Custom label formula" id="inp_label" />
+							</frame>
+							<frame label="Missing Values" id="frm_MssngVls">
+								<dropdown id="drp_missing" label="Show missing values (missing)">
+									<option label="If any present" value="ifany" checked="true" />
+									<option label="Never" value="no" />
+									<option label="Always" value="always" />
+								</dropdown>
+								<input label="Missing value text (missing_text)" id="inp_missing_text" initial="Unknown" />
+							</frame>
+						</column>
+					</tab>
+					<tab label="Themes &amp; Formatting" id="tab_ThmsFrmt">
+						<column id="clm_fAAJTNJAMA">
+							<frame label="Appearance" id="frm_Appearnc">
+								<dropdown id="drp_journal" label="Journal Theme">
+									<option label="None" value="none" checked="true" />
+									<option label="JAMA" value="jama" />
+									<option label="Lancet" value="lancet" />
+									<option label="NEJM" value="nejm" />
+									<option label="QJ Econ" value="qjecon" />
+								</dropdown>
+								<checkbox id="cbox_compact" label="Use compact theme" value="1" />
+							</frame>
+							<frame label="Output Engine" id="frm_OtptEngn">
+								<dropdown id="drp_printer" label="Printer Friendly Engine">
+									<option label="None" value="none" checked="true" />
+									<option label="gt" value="gt" />
+									<option label="kable" value="kable" />
+									<option label="flextable" value="flextable" />
+									<option label="huxtable" value="huxtable" />
+								</dropdown>
+							</frame>
+							<frame label="Language &amp; Localization" id="frm_LnggLclz">
+								<dropdown id="drp_lang" label="Language">
+									<option label="System Default (en)" value="en" checked="true" />
+									<option label="German (de)" value="de" />
+									<option label="Spanish (es)" value="es" />
+									<option label="French (fr)" value="fr" />
+									<option label="Portuguese (pt)" value="pt" />
+									<option label="Chinese (zh-cn)" value="zh-cn" />
+								</dropdown>
+								<input label="Decimal mark" id="inp_dec_mark" />
+								<input label="Big number mark" id="inp_big_mark" />
+							</frame>
+						</column>
+					</tab>
+				</tabbook>
+				<saveobject label="Save result to new object" checkable="true" checked="true" initial="gtsummary_result" id="sav_tbl_summary_result" />
+			</column>
+		</row>
+	</dialog>
+</document>

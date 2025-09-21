@@ -1,0 +1,19 @@
+Package: rk.gtsummary
+Type: Package
+Title: An RKWard plugin to generate summary tables using the
+        'gtsummary' package, supporting both standard data.frames
+        (tbl_summary) and survey design objects (tbl_svysummary).
+Version: 0.1.0
+Date: 2025-09-21
+Author: Alfonso Cano
+Maintainer: Alfonso Cano <alfonso.cano@correo.buap.mx>
+Enhances: rkward
+Description: An RKWard plugin to generate summary tables using the
+        'gtsummary' package, supporting both standard data.frames
+        (tbl_summary) and survey design objects (tbl_svysummary).
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyLoad: yes
+URL: https://github.com/rkward-community
+Authors@R: person(given="Alfonso", family="Cano",
+        email="alfonso.cano@correo.buap.mx", role=c("aut", "cre"))

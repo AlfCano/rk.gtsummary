@@ -1,0 +1,79 @@
+<!DOCTYPE rkhelp >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<title>
+		Survey Summary Table (gtsummary)
+	</title>
+	<summary>
+	</summary>
+	<usage>
+	</usage>
+	<!--
+		<section id="sct_EDITORDE" title="EDIT OR DELETE ME">
+			EDIT OR DELETE ME
+		</section>
+	-->
+	<settings>
+		<caption id="tab_Data" />
+		<setting id="var_svy_data">
+		</setting>
+		<setting id="var_svy_include">
+		</setting>
+		<setting id="var_svy_strata">
+		</setting>
+		<setting id="var_svy_by">
+		</setting>
+		<caption id="tab_Statstcs" />
+		<setting id="inp_statistic">
+		</setting>
+		<setting id="inp_digits">
+		</setting>
+		<setting id="drp_percent">
+		</setting>
+		<setting id="inp_type">
+		</setting>
+		<caption id="tab_LblsMssn" />
+		<caption id="frm_VrblLbls" />
+		<setting id="cbox_use_rk_labels">
+		</setting>
+		<setting id="inp_label">
+		</setting>
+		<caption id="frm_MssngVls" />
+		<setting id="drp_missing">
+		</setting>
+		<setting id="inp_missing_text">
+		</setting>
+		<caption id="tab_ThmsFrmt" />
+		<caption id="frm_Appearnc" />
+		<setting id="drp_journal">
+		</setting>
+		<setting id="cbox_compact">
+		</setting>
+		<caption id="frm_OtptEngn" />
+		<setting id="drp_printer">
+		</setting>
+		<caption id="frm_LnggLclz" />
+		<setting id="drp_lang">
+		</setting>
+		<setting id="inp_dec_mark">
+		</setting>
+		<setting id="inp_big_mark">
+		</setting>
+		<setting id="sav_svy_result">
+		</setting>
+	</settings>
+	<!--
+		<related>
+			<ul>
+				<li>
+					<link href="rkward://rhelp/..." />
+				</li>
+			</ul>
+		</related>
+	-->
+	<technical>
+	</technical>
+</document>

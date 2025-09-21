@@ -1,0 +1,97 @@
+<!DOCTYPE
+	rkpluginmap
+>
+<document
+	base_prefix=""
+	namespace="SummaryTablegtsummary"
+	id="SummaryTablegtsummary_rkward"
+	po_id="SummaryTablegtsummary_rkward"
+	priority="medium"
+>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<!--
+		<dependencies>
+		</dependencies>
+	-->
+	<about
+		name="rk.gtsummary"
+		shortinfo="An RKWard plugin to generate summary tables using the 'gtsummary' package, supporting both standard data.frames (tbl_summary) and survey design objects (tbl_svysummary)."
+		longinfo="An RKWard plugin to generate summary tables using the 'gtsummary' package, supporting both standard data.frames (tbl_summary) and survey design objects (tbl_svysummary)."
+		version="0.1.0"
+		releasedate="2025-09-21"
+		url="https://github.com/rkward-community"
+		license="GPL (&gt;= 3)"
+	>
+		<author
+			given="Alfonso"
+			family="Cano"
+			email="alfonso.cano@correo.buap.mx"
+			role="aut, cre"
+		/>
+	</about>
+	<require
+		map="rkward::menu"
+	/>
+	<require
+		map="rkward::embedded"
+	/>
+	<components>
+		<component
+			id="cmp_SmmryTblgtsmmrySrvySmmryT"
+			label="Survey Summary Table (gtsummary)"
+			type="standard"
+			file="plugins/SurveySummaryTablegtsummary.xml"
+		>
+		</component>
+		<component
+			id="cmp_SmmryTblgtsmmrySmmryTblgt"
+			label="Summary Table (gtsummary)"
+			type="standard"
+			file="plugins/SummaryTablegtsummary.xml"
+		>
+		</component>
+	</components>
+	<hierarchy>
+		<menu
+			id="analysis"
+			label="Analysis"
+		>
+			<menu
+				id="gtSummaries"
+				label="gt Summaries"
+			>
+				<entry
+					component="cmp_SmmryTblgtsmmrySrvySmmryT"
+				/>
+			</menu>
+		</menu>
+		<menu
+			id="analysis"
+			label="Analysis"
+		>
+			<menu
+				id="gtSummaries"
+				label="gt Summaries"
+			>
+				<entry
+					component="cmp_SmmryTblgtsmmrySmmryTblgt"
+				/>
+			</menu>
+		</menu>
+	</hierarchy>
+	<!--
+		<context
+			id="x11"
+		>
+		</context>
+	-->
+	<!--
+		<context
+			id="import"
+		>
+		</context>
+	-->
+</document>
