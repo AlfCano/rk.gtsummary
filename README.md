@@ -49,9 +49,18 @@ This plugin is not yet on CRAN. To install it, you need the `{remotes}` package 
 
 2.  **Install the Plugin**:
     Run the following command in the R console:
-    ```R
-    remotes::install_github("rkward-community/rk.gtsummary")
-    ```
+```R
+local({
+## Preparar
+require(devtools)
+## Computar
+  install_github(
+    repo="AlfCano/rk.gtsummary"
+  )
+## Imprimir el resultado
+rk.header ("Resultados de Instalar desde git")
+})
+```
 
 3.  **Activate the Plugin**:
     Restart RKWard, or go to `Settings -> R Packages -> Select loaded packages` and ensure that `rk.gtsummary` is checked.
