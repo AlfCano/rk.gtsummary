@@ -39,12 +39,12 @@ The plugin generates rich HTML tables that are displayed in RKWard's output view
 
 ## Installation
 
-This plugin is not yet on CRAN. To install it, you need the `{remotes}` package and can install directly from its future GitHub repository.
+This plugin is not yet on CRAN. To install it, you need the `{devtools}` package and can install directly from its future GitHub repository.
 
-1.  **Install `{remotes}`**:
+1.  **Install `{devtools}`**:
     If you don't have it, open the R console in RKWard and run:
     ```R
-    install.packages("remotes")
+    install.packages("devtools")
     ```
 
 2.  **Install the Plugin**:
