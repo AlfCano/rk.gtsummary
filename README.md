@@ -1,10 +1,14 @@
 # rk.gtsummary
 
-![Version](https://img.shields.io/badge/Version-0.1.0-blue.svg)
+![Version](https://img.shields.io/badge/Version-0.1.1-blue.svg)
 
 An RKWard plugin for creating beautiful, publication-ready summary tables using the powerful `{gtsummary}` package.
 
 This plugin provides a user-friendly graphical interface for the `tbl_summary` and `tbl_svysummary` functions, allowing for easy generation of descriptive statistics tables for both standard data frames and complex survey designs.
+
+## What is new on 0.1.1
+
+* Added a **new checkbox**, "Adjust for lonely PSUs (survey.lonely.psu = 'adjust')", has been added to the Data tab of the "Survey Summary Table" dialog.
 
 ## Features
 
