@@ -1,19 +1,12 @@
+
 local({
-  # Golden Rule 1: This R script is the single source of truth.
-  # It programmatically defines and generates all plugin files.
-
-  # --- PRE-FLIGHT CHECK ---
-  if (basename(getwd()) == "rk.gtsummary") {
-    stop("Your current working directory is already 'rk.gtsummary'. Please navigate to the parent directory ('..') before running this script to avoid creating a nested folder structure.")
-  }
-
   # Require "rkwarddev"
   require(rkwarddev)
   rkwarddev.required("0.08-1")
 
   # --- GLOBAL SETTINGS ---
   plugin_name <- "rk.gtsummary"
-  plugin_version <- "0.1.0" # Removed incompatible logic section
+  plugin_version <- "0.1.1"
 
   # =========================================================================================
   # PACKAGE DEFINITION (GLOBAL METADATA)
@@ -96,7 +89,6 @@ local({
       rk.XML.col(tbl_summary_df_selector),
       rk.XML.col(tbl_summary_tabbook, tbl_summary_save_object)
     )
-    # REMOVED: Incompatible <logic> section
   )
 
   tbl_summary_help <- rk.rkh.doc(
@@ -208,8 +200,15 @@ local({
   attr(svy_by_slot, "source_property") <- "variables"
   svy_save_object <- rk.XML.saveobj(id.name = "sav_svy_result", label = "Save result to new object", chk = TRUE, initial = "svy_gtsummary_result")
 
+  # MODIFIED: Added lonely PSU checkbox to the data tab
   svy_tabbook <- rk.XML.tabbook(tabs = list(
-      "Data" = rk.XML.col(svy_data_slot, svy_include_slot, svy_strata_slot, svy_by_slot),
+      "Data" = rk.XML.col(
+        svy_data_slot,
+        svy_include_slot,
+        svy_strata_slot,
+        svy_by_slot,
+        rk.XML.cbox(id.name = "cbox_svy_lonely_psu", label = "Adjust for lonely PSUs (survey.lonely.psu = 'adjust')", value = "1")
+      ),
       "Statistics" = rk.XML.col(statistic_input, digits_input, percent_dropdown, type_input),
       "Labels & Missing" = rk.XML.col(rk.XML.frame(use_rk_labels_cbox, label_input, label="Variable Labels"), rk.XML.frame(missing_dropdown, missing_text_input, label="Missing Values")),
       "Themes & Formatting" = themes_tab_content
@@ -221,7 +220,6 @@ local({
       rk.XML.col(svy_selector),
       rk.XML.col(svy_tabbook, svy_save_object)
     )
-    # REMOVED: Incompatible <logic> section
   )
 
   svy_help <- rk.rkh.doc(
@@ -231,9 +229,14 @@ local({
     title = rk.rkh.title("Table of Survey Summary Statistics")
   )
 
+  # MODIFIED: Added logic to handle lonely PSU option
   js_svy_logic <- '
     var svy_object = getValue("var_svy_data");
     if(!svy_object) return;
+
+    if(getValue("cbox_svy_lonely_psu") == "1"){
+      echo("options(survey.lonely.psu = \\"adjust\\")\\n\\n");
+    }
 
     var journal = getValue("drp_journal");
     var compact = getValue("cbox_compact");

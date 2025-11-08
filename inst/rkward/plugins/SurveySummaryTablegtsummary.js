@@ -17,6 +17,10 @@ function calculate(is_preview){
     var svy_object = getValue("var_svy_data");
     if(!svy_object) return;
 
+    if(getValue("cbox_svy_lonely_psu") == "1"){
+      echo("options(survey.lonely.psu = \"adjust\")\n\n");
+    }
+
     var journal = getValue("drp_journal");
     var compact = getValue("cbox_compact");
     var printer = getValue("drp_printer");

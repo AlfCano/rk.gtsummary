@@ -26,6 +26,8 @@
 		</setting>
 		<setting id="var_svy_by">
 		</setting>
+		<setting id="cbox_svy_lonely_psu">
+		</setting>
 		<caption id="tab_Statstcs" />
 		<setting id="inp_statistic">
 		</setting>
