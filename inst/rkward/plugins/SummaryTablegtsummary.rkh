@@ -27,7 +27,15 @@
 		<setting id="var_tbl_summary_by">
 		</setting>
 		<caption id="tab_Statstcs" />
-		<setting id="inp_statistic">
+		<setting id="rad_stat_mode">
+		</setting>
+		<caption id="frm_StndrdFr" />
+		<setting id="drp_stat_cont">
+		</setting>
+		<setting id="drp_stat_cat">
+		</setting>
+		<caption id="frm_CstmDfnt" />
+		<setting id="inp_statistic_custom">
 		</setting>
 		<setting id="inp_digits">
 		</setting>

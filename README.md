@@ -1,14 +1,27 @@
-# rk.gtsummary
+# rk.gtsummary: Publication-Ready Summary Tables
 
-![Version](https://img.shields.io/badge/Version-0.1.1-blue.svg)
+![Version](https://img.shields.io/badge/Version-0.1.2-blue.svg)
+![License](https://img.shields.io/badge/License-GPLv3-blue.svg)
+![RKWard](https://img.shields.io/badge/Platform-RKWard-green)
+[![R Linter](https://github.com/AlfCano/rk.gtsummary/actions/workflows/lintr.yml/badge.svg)](https://github.com/AlfCano/rk.gtsummary/actions/workflows/lintr.yml)
 
 An RKWard plugin for creating beautiful, publication-ready summary tables using the powerful `{gtsummary}` package.
 
 This plugin provides a user-friendly graphical interface for the `tbl_summary` and `tbl_svysummary` functions, allowing for easy generation of descriptive statistics tables for both standard data frames and complex survey designs.
 
-## What is new on 0.1.1
+## What's New in Version 0.1.2
 
-* Added a **new checkbox**, "Adjust for lonely PSUs (survey.lonely.psu = 'adjust')", has been added to the Data tab of the "Survey Summary Table" dialog.
+*   **New Statistics Interface:** The "Statistics" tab has been completely overhauled. You can now select standard statistical formats (e.g., `Mean (SD)`, `Median (IQR)`, `n (%)`) using simple **dropdown menus**. Advanced users can still switch to **"Custom Formula"** mode to type complex glue strings.
+*   **Multilingual Support:** The interface is now fully localized in:
+    *   🇺🇸 English (Default)
+    *   🇪🇸 Spanish (`es`)
+    *   🇫🇷 French (`fr`)
+    *   🇩🇪 German (`de`)
+    *   🇧🇷 Portuguese (Brazil) (`pt_BR`)
+
+## What's New in Version 0.1.1
+
+*   **Survey Data Support:** Added a **checkbox** to "Adjust for lonely PSUs (`survey.lonely.psu = 'adjust'`)" in the Data tab of the Survey Summary Table dialog.
 
 ## Features
 
@@ -18,7 +31,7 @@ This plugin provides a user-friendly graphical interface for the `tbl_summary` a
     -   Easily stratify tables by one variable (`by=`).
     -   Create deeply nested tables by adding a second, outer stratification variable (`strata=`).
 -   **Extensive Customization**:
-    -   **Statistics**: Modify the default statistics shown for continuous and categorical variables.
+    -   **Statistics**: Switch between "Standard Presets" for quick configuration or "Custom Formulas" for granular control over continuous and categorical statistics.
     -   **Labels**: Automatically use RKWard's built-in variable labels (`rk.get.label()`) for clear, descriptive tables, or provide your own custom label formulas.
     -   **Missing Values**: Control how missing data is displayed in the summary.
 -   **Publication-Ready Theming**:
@@ -27,53 +40,31 @@ This plugin provides a user-friendly graphical interface for the `tbl_summary` a
     -   Set a printer-friendly output engine (`gt`, `kable`, etc.).
     -   Easily configure language and localization settings (e.g., decimal marks).
 
-## Screenshots
-
-### Main Dialog (`tbl_summary`)
-
-The dialog provides four clear tabs for specifying your data, statistics, labels, and themes.
-
-*(Image: Screenshot of the main dialog showing the four tabs: Data, Statistics, Labels & Missing, Themes & Formatting)*
-
-### Example Output
-
-The plugin generates rich HTML tables that are displayed in RKWard's output viewer or an external browser.
-
-*(Image: Screenshot of a finished gtsummary table, stratified, showing clear labels and statistics)*
-
 ## Installation
 
-This plugin is not yet on CRAN. To install it, you need the `{devtools}` package and can install directly from its future GitHub repository.
+This plugin is not yet on CRAN. To install it, you need the `{devtools}` (or `{remotes}`) package.
 
-1.  **Install `{devtools}`**:
-    If you don't have it, open the R console in RKWard and run:
+1.  **Open RKWard**.
+2.  **Run the following command** in the R console:
+
     ```R
-    install.packages("devtools")
+    # If you don't have devtools installed:
+    # install.packages("devtools")
+    
+    local({
+      require(devtools)
+      install_github("AlfCano/rk.gtsummary", force = TRUE)
+    })
     ```
 
-2.  **Install the Plugin**:
-    Run the following command in the R console:
-```R
-local({
-## Preparar
-require(devtools)
-## Computar
-  install_github(
-    repo="AlfCano/rk.gtsummary"
-  )
-## Imprimir el resultado
-rk.header ("Resultados de Instalar desde git")
-})
-```
-
 3.  **Activate the Plugin**:
-    Restart RKWard, or go to `Settings -> R Packages -> Select loaded packages` and ensure that `rk.gtsummary` is checked.
+    Restart RKWard to load the new menu items and translations.
 
 ## Usage
 
 Once installed, the plugin will be available in the RKWard menu under:
 
-**`analysis` -> `gt Summaries`**
+**`Analysis` -> `gt Summaries`**
 
 You will see two options:
 
@@ -85,8 +76,8 @@ Select the appropriate option, choose your data and variables in the dialog, cus
 ## Dependencies
 
 This plugin requires the following R packages to be installed:
--   `{gtsummary}`
--   `{survey}`
+-   `gtsummary`
+-   `survey`
 
 ## Author
 
@@ -98,9 +89,3 @@ Alfonso Cano
 ## License
 
 GPL (>= 3)
-
----
-
-### Known Issues for v0.1.0
-
--   The `gtsummary` package produces rich HTML output. This output is not compatible with RKWard's standard code preview pane. Please use the "Submit" button to generate the final table, which will open in the appropriate viewer.

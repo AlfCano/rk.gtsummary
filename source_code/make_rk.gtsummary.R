@@ -1,4 +1,3 @@
-
 local({
   # Require "rkwarddev"
   require(rkwarddev)
@@ -6,7 +5,7 @@ local({
 
   # --- GLOBAL SETTINGS ---
   plugin_name <- "rk.gtsummary"
-  plugin_version <- "0.1.1"
+  plugin_version <- "0.1.2"
 
   # =========================================================================================
   # PACKAGE DEFINITION (GLOBAL METADATA)
@@ -29,15 +28,64 @@ local({
   )
 
   # =========================================================================================
-  # COMMON UI ELEMENTS (WITH EXPLICIT IDs)
+  # 1. SHARED UI RESOURCES
   # =========================================================================================
-  statistic_input <- rk.XML.input(id.name = "inp_statistic", label = "Statistic formula", initial = "list(all_continuous() ~ '{median} ({p25}, {p75})', all_categorical() ~ '{n} ({p}%)')")
-  digits_input <- rk.XML.input(id.name = "inp_digits", label = "Digits formula")
-  type_input <- rk.XML.input(id.name = "inp_type", label = "Type formula")
+
+  # --- STATISTICS TAB UI ---
+  # 1. Selection Mode
+  stat_mode_radio <- rk.XML.radio(label="Statistics Definition Mode", id.name="rad_stat_mode", options=list(
+    "Standard Presets (Recommended)" = list(val="preset", chk=TRUE),
+    "Custom Formula (Advanced)" = list(val="custom")
+  ))
+
+  # 2. Preset Options (GUI)
+  # Continuous
+  cont_stats_drop <- rk.XML.dropdown(label="Continuous Variables", id.name="drp_stat_cont", options=list(
+    "Median (IQR)" = list(val="median_iqr", chk=TRUE),
+    "Median (Range)" = list(val="median_range"),
+    "Mean (SD)" = list(val="mean_sd"),
+    "Mean ± SD" = list(val="mean_pm_sd"),
+    "Mean (CI)" = list(val="mean_ci"),
+    "Min - Max" = list(val="min_max")
+  ))
+
+  # Categorical
+  cat_stats_drop <- rk.XML.dropdown(label="Categorical Variables", id.name="drp_stat_cat", options=list(
+    "n (%)" = list(val="n_p", chk=TRUE),
+    "n / N (%)" = list(val="n_N_p"),
+    "n" = list(val="n"),
+    "Percent only (%)" = list(val="p")
+  ))
+
+  presets_frame <- rk.XML.frame(cont_stats_drop, cat_stats_drop, label="Standard Formats")
+  # Only show presets frame if mode is 'preset'
+  attr(presets_frame, "dependencies") <- list(active = list(string = "rad_stat_mode.string == 'preset'"))
+
+  # 3. Custom Option (Text Input)
+  custom_stat_input <- rk.XML.input(id.name = "inp_statistic_custom", label = "Custom formula (e.g., all_continuous() ~ '{mean}')", initial = "list(all_continuous() ~ '{mean} ({sd})', all_categorical() ~ '{n} / {N} ({p}%)')")
+  custom_frame <- rk.XML.frame(custom_stat_input, label="Custom Definition")
+  # Only show custom frame if mode is 'custom'
+  attr(custom_frame, "dependencies") <- list(active = list(string = "rad_stat_mode.string == 'custom'"))
+
+  # 4. Other Stats Options
+  digits_input <- rk.XML.input(id.name = "inp_digits", label = "Digits formula (optional)")
+  type_input <- rk.XML.input(id.name = "inp_type", label = "Type formula (optional)")
   percent_dropdown <- rk.XML.dropdown(id.name = "drp_percent", label = "Percentage basis (percent)", options = list(
     "Column" = list(val = "column", chk = TRUE), "Row" = list(val = "row"), "Cell" = list(val = "cell")
   ))
 
+  # Combine into one Column for the tab
+  stats_tab_content <- rk.XML.col(
+    stat_mode_radio,
+    presets_frame,
+    custom_frame,
+    rk.XML.stretch(),
+    digits_input,
+    percent_dropdown,
+    type_input
+  )
+
+  # --- LABELS & MISSING TAB UI ---
   use_rk_labels_cbox <- rk.XML.cbox(id.name = "cbox_use_rk_labels", label = "Use RKWard variable labels (rk.get.label)", value="1", chk=TRUE)
   label_input <- rk.XML.input(id.name = "inp_label", label = "Custom label formula")
 
@@ -46,6 +94,9 @@ local({
   ))
   missing_text_input <- rk.XML.input(id.name = "inp_missing_text", label = "Missing value text (missing_text)", initial = "Unknown")
 
+  labels_tab_content <- rk.XML.col(rk.XML.frame(use_rk_labels_cbox, label_input, label="Variable Labels"), rk.XML.frame(missing_dropdown, missing_text_input, label="Missing Values"))
+
+  # --- THEMES TAB UI ---
   journal_theme_dropdown <- rk.XML.dropdown(id.name="drp_journal", label="Journal Theme", options=list(
       "None" = list(val="none", chk=TRUE), "JAMA" = list(val="jama"), "Lancet" = list(val="lancet"), "NEJM" = list(val="nejm"), "QJ Econ" = list(val="qjecon")
   ))
@@ -66,6 +117,41 @@ local({
       rk.XML.frame(language_dropdown, decimal_mark_input, big_mark_input, label="Language & Localization")
   )
 
+  # --- SHARED JS HELPER FOR STATISTICS ---
+  # This string is injected into both calculate blocks to handle the GUI logic
+  js_stats_builder <- '
+    var stat_mode = getValue("rad_stat_mode");
+    var statistic_arg = "";
+
+    if (stat_mode == "custom") {
+        var raw_cust = getValue("inp_statistic_custom");
+        if(raw_cust) statistic_arg = "statistic = " + raw_cust;
+    } else {
+        var cont_style = getValue("drp_stat_cont");
+        var cat_style = getValue("drp_stat_cat");
+        var cont_str = "";
+        var cat_str = "";
+
+        // Continuous logic
+        if (cont_style == "median_iqr")   cont_str = "{median} ({p25}, {p75})";
+        if (cont_style == "median_range") cont_str = "{median} ({min}, {max})";
+        if (cont_style == "mean_sd")      cont_str = "{mean} ({sd})";
+        if (cont_style == "mean_pm_sd")   cont_str = "{mean} \u00B1 {sd}"; // Unicode Plus-Minus
+        if (cont_style == "mean_ci")      cont_str = "{mean} ({conf.low}, {conf.high})";
+        if (cont_style == "min_max")      cont_str = "{min} - {max}";
+
+        // Categorical logic
+        if (cat_style == "n_p")     cat_str = "{n} ({p}%)";
+        if (cat_style == "n_N_p")   cat_str = "{n} / {N} ({p}%)";
+        if (cat_style == "n")       cat_str = "{n}";
+        if (cat_style == "p")       cat_str = "{p}%";
+
+        if(cont_str && cat_str) {
+            statistic_arg = "statistic = list(all_continuous() ~ \\"" + cont_str + "\\", all_categorical() ~ \\"" + cat_str + "\\")";
+        }
+    }
+  '
+
   # =========================================================================================
   # COMPONENT 1 DEFINITION: tbl_summary
   # =========================================================================================
@@ -78,8 +164,8 @@ local({
 
   tbl_summary_tabbook <- rk.XML.tabbook(tabs = list(
       "Data" = rk.XML.col(tbl_summary_data_slot, tbl_summary_include_slot, tbl_summary_strata_slot, tbl_summary_by_slot),
-      "Statistics" = rk.XML.col(statistic_input, digits_input, percent_dropdown, type_input),
-      "Labels & Missing" = rk.XML.col(rk.XML.frame(use_rk_labels_cbox, label_input, label="Variable Labels"), rk.XML.frame(missing_dropdown, missing_text_input, label="Missing Values")),
+      "Statistics" = stats_tab_content,
+      "Labels & Missing" = labels_tab_content,
       "Themes & Formatting" = themes_tab_content
   ))
 
@@ -98,7 +184,8 @@ local({
     title = rk.rkh.title("Table of Summary Statistics")
   )
 
-  js_tbl_summary_logic <- '
+  js_tbl_summary_logic <- paste0(
+    '
     var data_frame = getValue("var_tbl_summary_data");
     if(!data_frame) return;
 
@@ -122,7 +209,10 @@ local({
     var strata_var_full = getValue("var_tbl_summary_strata");
     var include_vars_full = getValue("var_tbl_summary_include");
     var by_var_full = getValue("var_tbl_summary_by");
-    var statistic = getValue("inp_statistic");
+
+    // Statistics logic injected here
+    ', js_stats_builder, '
+
     var digits = getValue("inp_digits");
     var type = getValue("inp_type");
     var use_rk_labels = getValue("cbox_use_rk_labels");
@@ -162,7 +252,10 @@ local({
     }
 
     if(by_var_full){ options.push("by = \\"" + getColumnName(by_var_full) + "\\""); }
-    if(statistic){ options.push("statistic = " + statistic); }
+
+    // Use the variable generated by js_stats_builder
+    if(statistic_arg){ options.push(statistic_arg); }
+
     if(digits){ options.push("digits = " + digits); }
     if(type){ options.push("type = " + type); }
     if(missing){ options.push("missing = \\"" + missing + "\\""); }
@@ -178,7 +271,8 @@ local({
       options.unshift("data = " + data_frame);
       echo("gtsummary_result <- gtsummary::tbl_summary(" + options.join(", ") + ");\\n");
     }
-'
+    ')
+
   js_tbl_summary_printout <- '
     echo("rk.header(\\"Summary Table (gtsummary::tbl_summary)\\", level=3);\\n");
     echo("print(gtsummary_result);\\n");
@@ -200,7 +294,6 @@ local({
   attr(svy_by_slot, "source_property") <- "variables"
   svy_save_object <- rk.XML.saveobj(id.name = "sav_svy_result", label = "Save result to new object", chk = TRUE, initial = "svy_gtsummary_result")
 
-  # MODIFIED: Added lonely PSU checkbox to the data tab
   svy_tabbook <- rk.XML.tabbook(tabs = list(
       "Data" = rk.XML.col(
         svy_data_slot,
@@ -209,8 +302,8 @@ local({
         svy_by_slot,
         rk.XML.cbox(id.name = "cbox_svy_lonely_psu", label = "Adjust for lonely PSUs (survey.lonely.psu = 'adjust')", value = "1")
       ),
-      "Statistics" = rk.XML.col(statistic_input, digits_input, percent_dropdown, type_input),
-      "Labels & Missing" = rk.XML.col(rk.XML.frame(use_rk_labels_cbox, label_input, label="Variable Labels"), rk.XML.frame(missing_dropdown, missing_text_input, label="Missing Values")),
+      "Statistics" = stats_tab_content,
+      "Labels & Missing" = labels_tab_content,
       "Themes & Formatting" = themes_tab_content
   ))
 
@@ -229,8 +322,8 @@ local({
     title = rk.rkh.title("Table of Survey Summary Statistics")
   )
 
-  # MODIFIED: Added logic to handle lonely PSU option
-  js_svy_logic <- '
+  js_svy_logic <- paste0(
+    '
     var svy_object = getValue("var_svy_data");
     if(!svy_object) return;
 
@@ -258,7 +351,10 @@ local({
     var strata_var_full = getValue("var_svy_strata");
     var include_vars_full = getValue("var_svy_include");
     var by_var_full = getValue("var_svy_by");
-    var statistic = getValue("inp_statistic");
+
+    // Statistics logic injected here
+    ', js_stats_builder, '
+
     var digits = getValue("inp_digits");
     var type = getValue("inp_type");
     var use_rk_labels = getValue("cbox_use_rk_labels");
@@ -298,7 +394,10 @@ local({
     }
 
     if(by_var_full){ options.push("by = \\"" + getColumnName(by_var_full) + "\\""); }
-    if(statistic){ options.push("statistic = " + statistic); }
+
+    // Use the variable generated by js_stats_builder
+    if(statistic_arg){ options.push(statistic_arg); }
+
     if(digits){ options.push("digits = " + digits); }
     if(type){ options.push("type = " + type); }
     if(missing){ options.push("missing = \\"" + missing + "\\""); }
@@ -314,7 +413,8 @@ local({
       options.unshift("data = " + svy_object);
       echo("svy_gtsummary_result <- gtsummary::tbl_svysummary(" + options.join(", ") + ");\\n");
     }
-'
+    ')
+
   js_svy_printout <- '
     echo("rk.header(\\"Survey Summary Table (gtsummary::tbl_svysummary)\\", level=3);\\n");
     echo("print(svy_gtsummary_result);\\n");
@@ -334,6 +434,7 @@ local({
   # =========================================================================================
   # PACKAGE CREATION (THE MAIN CALL)
   # =========================================================================================
+  # ADDED: po_id explicitly
   plugin.dir <- rk.plugin.skeleton(
     about = package_about, path = ".",
     xml = list(dialog = tbl_summary_dialog),
@@ -343,7 +444,9 @@ local({
     ),
     rkh = list(help = tbl_summary_help),
     pluginmap = list(
-      name = "Summary Table (gtsummary)", hierarchy = list("analysis", "gt Summaries")
+      name = "Summary Table (gtsummary)",
+      hierarchy = list("analysis", "gt Summaries"),
+      po_id = "SummaryTablegtsummary_rkward"
     ),
     components = list(svy_summary_component),
     create = c("pmap", "xml", "js", "desc", "rkh"), load = TRUE, overwrite = TRUE, show = FALSE

@@ -1,0 +1,269 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: rk.gtsummary 0.1.2\n"
+"Report-Msgid-Bugs-To: https://mail.kde.org/mailman/listinfo/kde-i18n-doc\n"
+"POT-Creation-Date: 2025-01-03 13:00+0000\n"
+"PO-Revision-Date: 2025-01-03 13:00+0000\n"
+"Last-Translator: Alfonso Cano Robles <alfonso.cano@correo.buap.mx>\n"
+"Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: RKWard Plugin Generator\n"
+
+msgid "An RKWard plugin to generate summary tables using the 'gtsummary' package, supporting both standard data.frames (tbl_summary) and survey design objects (tbl_svysummary)."
+msgstr "Un plugin de RKWard para generar tablas de resumen usando el paquete 'gtsummary', soportando tanto data.frames estándar (tbl_summary) como objetos de diseño de encuesta (tbl_svysummary)."
+
+msgid "Summary Table (gtsummary)"
+msgstr "Tabla de Resumen (gtsummary)"
+
+msgid "analysis"
+msgstr "Análisis"
+
+msgid "gt Summaries"
+msgstr "Resúmenes gt"
+
+msgid "Data frames"
+msgstr "Data frames"
+
+msgid "Data frame to summarize"
+msgstr "Data frame a resumir"
+
+msgid "Variables to include"
+msgstr "Variables a incluir"
+
+msgid "Outer stratification (strata)"
+msgstr "Estratificación externa (strata)"
+
+msgid "Inner stratification (by)"
+msgstr "Estratificación interna (by)"
+
+msgid "Save result to new object"
+msgstr "Guardar resultado en nuevo objeto"
+
+msgid "Statistics Definition Mode"
+msgstr "Modo de Definición de Estadísticas"
+
+msgid "Standard Presets (Recommended)"
+msgstr "Preajustes Estándar (Recomendado)"
+
+msgid "Custom Formula (Advanced)"
+msgstr "Fórmula Personalizada (Avanzado)"
+
+msgid "Continuous Variables"
+msgstr "Variables Continuas"
+
+msgid "Median (IQR)"
+msgstr "Mediana (Rango Intercuartil)"
+
+msgid "Median (Range)"
+msgstr "Mediana (Rango)"
+
+msgid "Mean (SD)"
+msgstr "Media (DE)"
+
+msgid "Mean ± SD"
+msgstr "Media ± DE"
+
+msgid "Mean (CI)"
+msgstr "Media (IC)"
+
+msgid "Min - Max"
+msgstr "Mín - Máx"
+
+msgid "Categorical Variables"
+msgstr "Variables Categóricas"
+
+msgid "n (%)"
+msgstr "n (%)"
+
+msgid "n / N (%)"
+msgstr "n / N (%)"
+
+msgid "n"
+msgstr "n"
+
+msgid "Percent only (%)"
+msgstr "Solo porcentaje (%)"
+
+msgid "Standard Formats"
+msgstr "Formatos Estándar"
+
+msgid "Custom formula (e.g., all_continuous() ~ '{mean}')"
+msgstr "Fórmula personalizada (ej. all_continuous() ~ '{mean}')"
+
+msgid "Custom Definition"
+msgstr "Definición Personalizada"
+
+msgid "Statistic formula"
+msgstr "Fórmula estadística"
+
+msgid "Digits formula"
+msgstr "Fórmula de dígitos"
+
+msgid "Digits formula (optional)"
+msgstr "Fórmula de dígitos (opcional)"
+
+msgid "Type formula"
+msgstr "Fórmula de tipo"
+
+msgid "Type formula (optional)"
+msgstr "Fórmula de tipo (opcional)"
+
+msgid "Percentage basis (percent)"
+msgstr "Base de porcentaje (percent)"
+
+msgid "Column"
+msgstr "Columna"
+
+msgid "Row"
+msgstr "Fila"
+
+msgid "Cell"
+msgstr "Celda"
+
+msgid "Use RKWard variable labels (rk.get.label)"
+msgstr "Usar etiquetas de variable RKWard (rk.get.label)"
+
+msgid "Custom label formula"
+msgstr "Fórmula de etiqueta personalizada"
+
+msgid "Variable Labels"
+msgstr "Etiquetas de Variable"
+
+msgid "Show missing values (missing)"
+msgstr "Mostrar valores faltantes (missing)"
+
+msgid "If any present"
+msgstr "Si hay presentes"
+
+msgid "Never"
+msgstr "Nunca"
+
+msgid "Always"
+msgstr "Siempre"
+
+msgid "Missing value text (missing_text)"
+msgstr "Texto para valor faltante (missing_text)"
+
+msgid "Missing Values"
+msgstr "Valores Faltantes"
+
+msgid "Journal Theme"
+msgstr "Tema de Revista (Journal)"
+
+msgid "None"
+msgstr "Ninguno"
+
+msgid "JAMA"
+msgstr "JAMA"
+
+msgid "Lancet"
+msgstr "Lancet"
+
+msgid "NEJM"
+msgstr "NEJM"
+
+msgid "QJ Econ"
+msgstr "QJ Econ"
+
+msgid "Use compact theme"
+msgstr "Usar tema compacto"
+
+msgid "Appearance"
+msgstr "Apariencia"
+
+msgid "Printer Friendly Engine"
+msgstr "Motor de Impresión Amigable"
+
+msgid "Output Engine"
+msgstr "Motor de Salida"
+
+msgid "Language"
+msgstr "Idioma"
+
+msgid "System Default (en)"
+msgstr "Predeterminado del Sistema (en)"
+
+msgid "German (de)"
+msgstr "Alemán (de)"
+
+msgid "Spanish (es)"
+msgstr "Español (es)"
+
+msgid "French (fr)"
+msgstr "Francés (fr)"
+
+msgid "Portuguese (pt)"
+msgstr "Portugués (pt)"
+
+msgid "Chinese (zh-cn)"
+msgstr "Chino (zh-cn)"
+
+msgid "Decimal mark"
+msgstr "Marca decimal"
+
+msgid "Big number mark"
+msgstr "Marca de miles"
+
+msgid "Language & Localization"
+msgstr "Idioma y Localización"
+
+msgid "Data"
+msgstr "Datos"
+
+msgid "Statistics"
+msgstr "Estadísticas"
+
+msgid "Labels & Missing"
+msgstr "Etiquetas y Faltantes"
+
+msgid "Themes & Formatting"
+msgstr "Temas y Formato"
+
+msgid "Survey design objects"
+msgstr "Objetos de diseño de encuesta"
+
+msgid "Survey object to summarize"
+msgstr "Objeto de encuesta a resumir"
+
+msgid "Adjust for lonely PSUs (survey.lonely.psu = 'adjust')"
+msgstr "Ajustar por PSUs solitarias (survey.lonely.psu = 'adjust')"
+
+msgid "Survey Summary Table (tbl_svysummary)"
+msgstr "Tabla de Resumen de Encuesta (tbl_svysummary)"
+
+msgid "Survey Summary Table (gtsummary)"
+msgstr "Tabla de Resumen de Encuesta (gtsummary)"
+
+msgid "Creates a descriptive summary table for a data frame using gtsummary::tbl_summary()."
+msgstr "Crea una tabla de resumen descriptiva para un data frame usando gtsummary::tbl_summary()."
+
+msgid "Select a data frame and the variables to include."
+msgstr "Seleccione un data frame y las variables a incluir."
+
+msgid "Key Arguments"
+msgstr "Argumentos Clave"
+
+msgid "<p>Use the tabs to customize statistics, formatting, themes, and handling of missing data. Use 'Outer stratification' to create grouped tables with <code>tbl_strata()</code>.</p>"
+msgstr "<p>Use las pestañas para personalizar estadísticas, formato, temas y manejo de datos faltantes. Use 'Estratificación externa' para crear tablas agrupadas con <code>tbl_strata()</code>.</p>"
+
+msgid "Table of Summary Statistics"
+msgstr "Tabla de Estadísticas de Resumen"
+
+msgid "Creates a descriptive summary table for a survey design object using gtsummary::tbl_svysummary()."
+msgstr "Crea una tabla de resumen descriptiva para un objeto de diseño de encuesta usando gtsummary::tbl_svysummary()."
+
+msgid "Select a survey.design object and the variables to include."
+msgstr "Seleccione un objeto survey.design y las variables a incluir."
+
+msgid "Key Difference"
+msgstr "Diferencia Clave"
+
+msgid "This dialog requires an object of class <code>survey.design</code>."
+msgstr "Este diálogo requiere un objeto de clase <code>survey.design</code>."
+
+msgid "Table of Survey Summary Statistics"
+msgstr "Tabla de Estadísticas de Resumen de Encuesta"

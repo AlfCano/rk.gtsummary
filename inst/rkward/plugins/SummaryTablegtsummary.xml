@@ -34,15 +34,38 @@
 						</column>
 					</tab>
 					<tab label="Statistics" id="tab_Statstcs">
-						<column id="clm_iS2575DPCR">
-							<input label="Statistic formula" id="inp_statistic" initial="list(all_continuous() ~ '{median} ({p25}, {p75})', all_categorical() ~ '{n} ({p}%)')" />
-							<input label="Digits formula" id="inp_digits" />
+						<column id="clm_rSDMSPRCFA">
+							<radio id="rad_stat_mode" label="Statistics Definition Mode">
+								<option label="Standard Presets (Recommended)" value="preset" checked="true" />
+								<option label="Custom Formula (Advanced)" value="custom" />
+							</radio>
+							<frame label="Standard Formats" id="frm_StndrdFr">
+								<dropdown id="drp_stat_cont" label="Continuous Variables">
+									<option label="Median (IQR)" value="median_iqr" checked="true" />
+									<option label="Median (Range)" value="median_range" />
+									<option label="Mean (SD)" value="mean_sd" />
+									<option label="Mean ± SD" value="mean_pm_sd" />
+									<option label="Mean (CI)" value="mean_ci" />
+									<option label="Min - Max" value="min_max" />
+								</dropdown>
+								<dropdown id="drp_stat_cat" label="Categorical Variables">
+									<option label="n (%)" value="n_p" checked="true" />
+									<option label="n / N (%)" value="n_N_p" />
+									<option label="n" value="n" />
+									<option label="Percent only (%)" value="p" />
+								</dropdown>
+							</frame>
+							<frame label="Custom Definition" id="frm_CstmDfnt">
+								<input label="Custom formula (e.g., all_continuous() ~ '{mean}')" id="inp_statistic_custom" initial="list(all_continuous() ~ '{mean} ({sd})', all_categorical() ~ '{n} / {N} ({p}%)')" />
+							</frame>
+							<stretch />
+							<input label="Digits formula (optional)" id="inp_digits" />
 							<dropdown id="drp_percent" label="Percentage basis (percent)">
 								<option label="Column" value="column" checked="true" />
 								<option label="Row" value="row" />
 								<option label="Cell" value="cell" />
 							</dropdown>
-							<input label="Type formula" id="inp_type" />
+							<input label="Type formula (optional)" id="inp_type" />
 						</column>
 					</tab>
 					<tab label="Labels &amp; Missing" id="tab_LblsMssn">
