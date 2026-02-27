@@ -27,6 +27,7 @@ function calculate(is_preview){
     var lang = getValue("drp_lang");
     var dec_mark = getValue("inp_dec_mark");
     var big_mark = getValue("inp_big_mark");
+    var convert_save = getValue("drp_save_conversion");
 
     if(journal && journal != "none") { echo("gtsummary::theme_gtsummary_journal(journal = \"" + journal + "\");\n"); }
     if(compact == "1") { echo("gtsummary::theme_gtsummary_compact();\n"); }
@@ -125,14 +126,21 @@ function calculate(is_preview){
     if(missing_text){ options.push("missing_text = \"" + missing_text + "\""); }
     if(percent){ options.push("percent = \"" + percent + "\""); }
 
+    // Construct the conversion pipe suffix if needed
+    var conversion_suffix = "";
+    if(convert_save == "gt") conversion_suffix = " %>% gtsummary::as_gt()";
+    if(convert_save == "flextable") conversion_suffix = " %>% gtsummary::as_flex_table()";
+    if(convert_save == "huxtable") conversion_suffix = " %>% gtsummary::as_hux_table()";
+
     if(strata_var_full) {
       var strata_var = getColumnName(strata_var_full);
       var inner_call = ".x %>% gtsummary::tbl_svysummary(" + options.join(", ") + ")";
       var final_call = svy_object + " %>% gtsummary::tbl_strata(strata = \"" + strata_var + "\", .tbl_fun = ~ " + inner_call + ")";
-      echo("svy_gtsummary_result <- " + final_call + ";\n");
+      // Strict assignment to initial object name
+      echo("svy_gtsummary_result <- " + final_call + conversion_suffix + ";\n");
     } else {
       options.unshift("data = " + svy_object);
-      echo("svy_gtsummary_result <- gtsummary::tbl_svysummary(" + options.join(", ") + ");\n");
+      echo("svy_gtsummary_result <- gtsummary::tbl_svysummary(" + options.join(", ") + ")" + conversion_suffix + ";\n");
     }
     
 }

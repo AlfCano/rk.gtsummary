@@ -5,7 +5,7 @@ local({
 
   # --- GLOBAL SETTINGS ---
   plugin_name <- "rk.gtsummary"
-  plugin_version <- "0.1.2"
+  plugin_version <- "0.1.3"
 
   # =========================================================================================
   # PACKAGE DEFINITION (GLOBAL METADATA)
@@ -101,7 +101,18 @@ local({
       "None" = list(val="none", chk=TRUE), "JAMA" = list(val="jama"), "Lancet" = list(val="lancet"), "NEJM" = list(val="nejm"), "QJ Econ" = list(val="qjecon")
   ))
   compact_theme_cbox <- rk.XML.cbox(id.name="cbox_compact", label="Use compact theme", value="1")
-  printer_engine_dropdown <- rk.XML.dropdown(id.name="drp_printer", label="Printer Friendly Engine", options=list(
+
+  # NEW: Save conversion dropdown (Output format) - Moved to Output Tab later, but defined here for reuse?
+  # Actually, since rk.XML objects are nodes, we should ideally create fresh nodes or use the same definition if inserted once.
+  # I will define it here but insert it into the 5th tab logic.
+  save_conversion_dropdown <- rk.XML.dropdown(id.name="drp_save_conversion", label="Convert object format (Reduces file size)", options=list(
+      "No conversion (gtsummary object)" = list(val="none", chk=TRUE),
+      "gt object (HTML/PDF)" = list(val="gt"),
+      "flextable (Word)" = list(val="flextable"),
+      "huxtable (LaTeX/RTF)" = list(val="huxtable")
+  ))
+
+  printer_engine_dropdown <- rk.XML.dropdown(id.name="drp_printer", label="Printer Friendly Engine (Preview)", options=list(
       "None" = list(val="none", chk=TRUE), "gt" = list(val="gt"), "kable" = list(val="kable"), "flextable" = list(val="flextable"), "huxtable" = list(val="huxtable")
   ))
   language_dropdown <- rk.XML.dropdown(id.name="drp_lang", label="Language", options=list(
@@ -111,9 +122,10 @@ local({
   decimal_mark_input <- rk.XML.input(id.name="inp_dec_mark", label="Decimal mark")
   big_mark_input <- rk.XML.input(id.name="inp_big_mark", label="Big number mark")
 
+  # Removed save_conversion_dropdown from here
   themes_tab_content <- rk.XML.col(
       rk.XML.frame(journal_theme_dropdown, compact_theme_cbox, label="Appearance"),
-      rk.XML.frame(printer_engine_dropdown, label="Output Engine"),
+      rk.XML.frame(printer_engine_dropdown, label="Display Options"),
       rk.XML.frame(language_dropdown, decimal_mark_input, big_mark_input, label="Language & Localization")
   )
 
@@ -160,20 +172,29 @@ local({
   tbl_summary_include_slot <- rk.XML.varslot(id.name = "var_tbl_summary_include", label = "Variables to include", source = "slc_tbl_summary_source", multi = TRUE)
   tbl_summary_strata_slot <- rk.XML.varslot(id.name = "var_tbl_summary_strata", label = "Outer stratification (strata)", source = "slc_tbl_summary_source")
   tbl_summary_by_slot <- rk.XML.varslot(id.name = "var_tbl_summary_by", label = "Inner stratification (by)", source = "slc_tbl_summary_source")
-  tbl_summary_save_object <- rk.XML.saveobj(id.name = "sav_tbl_summary_result", label = "Save result to new object", chk = TRUE, initial = "gtsummary_result")
+
+  # CHANGED: chk = FALSE
+  tbl_summary_save_object <- rk.XML.saveobj(id.name = "sav_tbl_summary_result", label = "Save result to new object", chk = FALSE, initial = "gtsummary_result")
+
+  # NEW: Output Tab Content
+  tbl_summary_output_tab <- rk.XML.col(
+    rk.XML.frame(save_conversion_dropdown, label="Output Format"),
+    rk.XML.frame(tbl_summary_save_object, label="Save Object")
+  )
 
   tbl_summary_tabbook <- rk.XML.tabbook(tabs = list(
       "Data" = rk.XML.col(tbl_summary_data_slot, tbl_summary_include_slot, tbl_summary_strata_slot, tbl_summary_by_slot),
       "Statistics" = stats_tab_content,
       "Labels & Missing" = labels_tab_content,
-      "Themes & Formatting" = themes_tab_content
+      "Themes & Formatting" = themes_tab_content,
+      "Output" = tbl_summary_output_tab  # Added Tab 5
   ))
 
   tbl_summary_dialog <- rk.XML.dialog(
     label = "Summary Table (tbl_summary)",
     child = rk.XML.row(
       rk.XML.col(tbl_summary_df_selector),
-      rk.XML.col(tbl_summary_tabbook, tbl_summary_save_object)
+      rk.XML.col(tbl_summary_tabbook) # Removed Save Object from here, it's inside Tab 5
     )
   )
 
@@ -195,6 +216,7 @@ local({
     var lang = getValue("drp_lang");
     var dec_mark = getValue("inp_dec_mark");
     var big_mark = getValue("inp_big_mark");
+    var convert_save = getValue("drp_save_conversion");
 
     if(journal && journal != "none") { echo("gtsummary::theme_gtsummary_journal(journal = \\"" + journal + "\\");\\n"); }
     if(compact == "1") { echo("gtsummary::theme_gtsummary_compact();\\n"); }
@@ -262,14 +284,21 @@ local({
     if(missing_text){ options.push("missing_text = \\"" + missing_text + "\\""); }
     if(percent){ options.push("percent = \\"" + percent + "\\""); }
 
+    // Construct the conversion pipe suffix if needed
+    var conversion_suffix = "";
+    if(convert_save == "gt") conversion_suffix = " %>% gtsummary::as_gt()";
+    if(convert_save == "flextable") conversion_suffix = " %>% gtsummary::as_flex_table()";
+    if(convert_save == "huxtable") conversion_suffix = " %>% gtsummary::as_hux_table()";
+
     if(strata_var_full) {
       var strata_var = getColumnName(strata_var_full);
       var inner_call = ".x %>% gtsummary::tbl_summary(" + options.join(", ") + ")";
       var final_call = data_frame + " %>% gtsummary::tbl_strata(strata = \\"" + strata_var + "\\", .tbl_fun = ~ " + inner_call + ")";
-      echo("gtsummary_result <- " + final_call + ";\\n");
+      // Strict assignment to initial object name
+      echo("gtsummary_result <- " + final_call + conversion_suffix + ";\\n");
     } else {
       options.unshift("data = " + data_frame);
-      echo("gtsummary_result <- gtsummary::tbl_summary(" + options.join(", ") + ");\\n");
+      echo("gtsummary_result <- gtsummary::tbl_summary(" + options.join(", ") + ")" + conversion_suffix + ";\\n");
     }
     ')
 
@@ -292,7 +321,15 @@ local({
   attr(svy_strata_slot, "source_property") <- "variables"
   svy_by_slot <- rk.XML.varslot(id.name = "var_svy_by", label = "Inner stratification (by)", source = "slc_svy_source")
   attr(svy_by_slot, "source_property") <- "variables"
-  svy_save_object <- rk.XML.saveobj(id.name = "sav_svy_result", label = "Save result to new object", chk = TRUE, initial = "svy_gtsummary_result")
+
+  # CHANGED: chk = FALSE
+  svy_save_object <- rk.XML.saveobj(id.name = "sav_svy_result", label = "Save result to new object", chk = FALSE, initial = "svy_gtsummary_result")
+
+  # NEW: Output Tab Content (Survey)
+  svy_output_tab <- rk.XML.col(
+    rk.XML.frame(save_conversion_dropdown, label="Output Format"),
+    rk.XML.frame(svy_save_object, label="Save Object")
+  )
 
   svy_tabbook <- rk.XML.tabbook(tabs = list(
       "Data" = rk.XML.col(
@@ -304,14 +341,15 @@ local({
       ),
       "Statistics" = stats_tab_content,
       "Labels & Missing" = labels_tab_content,
-      "Themes & Formatting" = themes_tab_content
+      "Themes & Formatting" = themes_tab_content,
+      "Output" = svy_output_tab # Added Tab 5
   ))
 
   svy_dialog <- rk.XML.dialog(
     label = "Survey Summary Table (tbl_svysummary)",
     child = rk.XML.row(
       rk.XML.col(svy_selector),
-      rk.XML.col(svy_tabbook, svy_save_object)
+      rk.XML.col(svy_tabbook) # Removed Save Object from here, it's inside Tab 5
     )
   )
 
@@ -337,6 +375,7 @@ local({
     var lang = getValue("drp_lang");
     var dec_mark = getValue("inp_dec_mark");
     var big_mark = getValue("inp_big_mark");
+    var convert_save = getValue("drp_save_conversion");
 
     if(journal && journal != "none") { echo("gtsummary::theme_gtsummary_journal(journal = \\"" + journal + "\\");\\n"); }
     if(compact == "1") { echo("gtsummary::theme_gtsummary_compact();\\n"); }
@@ -404,14 +443,21 @@ local({
     if(missing_text){ options.push("missing_text = \\"" + missing_text + "\\""); }
     if(percent){ options.push("percent = \\"" + percent + "\\""); }
 
+    // Construct the conversion pipe suffix if needed
+    var conversion_suffix = "";
+    if(convert_save == "gt") conversion_suffix = " %>% gtsummary::as_gt()";
+    if(convert_save == "flextable") conversion_suffix = " %>% gtsummary::as_flex_table()";
+    if(convert_save == "huxtable") conversion_suffix = " %>% gtsummary::as_hux_table()";
+
     if(strata_var_full) {
       var strata_var = getColumnName(strata_var_full);
       var inner_call = ".x %>% gtsummary::tbl_svysummary(" + options.join(", ") + ")";
       var final_call = svy_object + " %>% gtsummary::tbl_strata(strata = \\"" + strata_var + "\\", .tbl_fun = ~ " + inner_call + ")";
-      echo("svy_gtsummary_result <- " + final_call + ";\\n");
+      // Strict assignment to initial object name
+      echo("svy_gtsummary_result <- " + final_call + conversion_suffix + ";\\n");
     } else {
       options.unshift("data = " + svy_object);
-      echo("svy_gtsummary_result <- gtsummary::tbl_svysummary(" + options.join(", ") + ");\\n");
+      echo("svy_gtsummary_result <- gtsummary::tbl_svysummary(" + options.join(", ") + ")" + conversion_suffix + ";\\n");
     }
     ')
 
@@ -434,7 +480,7 @@ local({
   # =========================================================================================
   # PACKAGE CREATION (THE MAIN CALL)
   # =========================================================================================
-  # ADDED: po_id explicitly
+  # REMOVED: po_id
   plugin.dir <- rk.plugin.skeleton(
     about = package_about, path = ".",
     xml = list(dialog = tbl_summary_dialog),
@@ -445,8 +491,7 @@ local({
     rkh = list(help = tbl_summary_help),
     pluginmap = list(
       name = "Summary Table (gtsummary)",
-      hierarchy = list("analysis", "gt Summaries"),
-      po_id = "SummaryTablegtsummary_rkward"
+      hierarchy = list("analysis", "gt Summaries")
     ),
     components = list(svy_summary_component),
     create = c("pmap", "xml", "js", "desc", "rkh"), load = TRUE, overwrite = TRUE, show = FALSE

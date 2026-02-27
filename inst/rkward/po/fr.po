@@ -1,56 +1,31 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: rk.gtsummary 0.1.2\n"
-"Report-Msgid-Bugs-To: https://mail.kde.org/mailman/listinfo/kde-i18n-doc\n"
-"POT-Creation-Date: 2025-01-03 13:00+0000\n"
-"PO-Revision-Date: 2025-01-03 13:00+0000\n"
-"Last-Translator: Your Name <your.email@example.com>\n"
-"Language-Team: French <kde-francophone@kde.org>\n"
+"Project-Id-Version: rk.gtsummary 0.1.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-26 20:00+0000\n"
+"PO-Revision-Date: 2026-02-26 20:00+0100\n"
+"Last-Translator: \n"
+"Language-Team: French <rkward-devel@kde.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.0\n"
-
-msgid "An RKWard plugin to generate summary tables using the 'gtsummary' package, supporting both standard data.frames (tbl_summary) and survey design objects (tbl_svysummary)."
-msgstr "Un plugin RKWard pour générer des tableaux récapitulatifs à l'aide du package 'gtsummary', prenant en charge à la fois les data.frames standard (tbl_summary) et les objets de plan d'échantillonnage (tbl_svysummary)."
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
 
 msgid "Summary Table (gtsummary)"
-msgstr "Tableau récapitulatif (gtsummary)"
+msgstr "Tableau de synthèse (gtsummary)"
 
-msgid "analysis"
-msgstr "Analyse"
-
-msgid "gt Summaries"
-msgstr "Résumés gt"
-
-msgid "Data frames"
-msgstr "Data frames"
-
-msgid "Data frame to summarize"
-msgstr "Data frame à résumer"
-
-msgid "Variables to include"
-msgstr "Variables à inclure"
-
-msgid "Outer stratification (strata)"
-msgstr "Stratification externe (strata)"
-
-msgid "Inner stratification (by)"
-msgstr "Stratification interne (by)"
-
-msgid "Save result to new object"
-msgstr "Enregistrer le résultat dans un nouvel objet"
+msgid "An RKWard plugin to generate summary tables using the 'gtsummary' package, supporting both standard data.frames (tbl_summary) and survey design objects (tbl_svysummary)."
+msgstr "Un plugin RKWard pour générer des tableaux de synthèse avec le paquet 'gtsummary', supportant les data.frames (tbl_summary) et les plans de sondage (tbl_svysummary)."
 
 msgid "Statistics Definition Mode"
 msgstr "Mode de définition des statistiques"
 
 msgid "Standard Presets (Recommended)"
-msgstr "Préréglages standard (recommandé)"
+msgstr "Préréglages standard (Recommandé)"
 
 msgid "Custom Formula (Advanced)"
-msgstr "Formule personnalisée (avancé)"
+msgstr "Formule personnalisée (Avancé)"
 
 msgid "Continuous Variables"
 msgstr "Variables continues"
@@ -86,7 +61,7 @@ msgid "n"
 msgstr "n"
 
 msgid "Percent only (%)"
-msgstr "Pourcentage seulement (%)"
+msgstr "Pourcentage seul (%)"
 
 msgid "Standard Formats"
 msgstr "Formats standard"
@@ -97,17 +72,8 @@ msgstr "Formule personnalisée (ex: all_continuous() ~ '{mean}')"
 msgid "Custom Definition"
 msgstr "Définition personnalisée"
 
-msgid "Statistic formula"
-msgstr "Formule statistique"
-
-msgid "Digits formula"
-msgstr "Formule des chiffres (digits)"
-
 msgid "Digits formula (optional)"
-msgstr "Formule des chiffres (optionnel)"
-
-msgid "Type formula"
-msgstr "Formule de type"
+msgstr "Formule des chiffres significatifs (optionnel)"
 
 msgid "Type formula (optional)"
 msgstr "Formule de type (optionnel)"
@@ -125,19 +91,16 @@ msgid "Cell"
 msgstr "Cellule"
 
 msgid "Use RKWard variable labels (rk.get.label)"
-msgstr "Utiliser les étiquettes de variable RKWard (rk.get.label)"
+msgstr "Utiliser les étiquettes de variable RKWard"
 
 msgid "Custom label formula"
 msgstr "Formule d'étiquette personnalisée"
-
-msgid "Variable Labels"
-msgstr "Étiquettes de variable"
 
 msgid "Show missing values (missing)"
 msgstr "Afficher les valeurs manquantes (missing)"
 
 msgid "If any present"
-msgstr "Si présent"
+msgstr "Si présentes"
 
 msgid "Never"
 msgstr "Jamais"
@@ -146,13 +109,16 @@ msgid "Always"
 msgstr "Toujours"
 
 msgid "Missing value text (missing_text)"
-msgstr "Texte pour valeur manquante (missing_text)"
+msgstr "Texte pour valeurs manquantes"
+
+msgid "Variable Labels"
+msgstr "Étiquettes des variables"
 
 msgid "Missing Values"
 msgstr "Valeurs manquantes"
 
 msgid "Journal Theme"
-msgstr "Thème de journal"
+msgstr "Thème de revue (Journal)"
 
 msgid "None"
 msgstr "Aucun"
@@ -172,14 +138,23 @@ msgstr "QJ Econ"
 msgid "Use compact theme"
 msgstr "Utiliser le thème compact"
 
-msgid "Appearance"
-msgstr "Apparence"
+msgid "Convert object format (Reduces file size)"
+msgstr "Convertir le format de l'objet (Réduit la taille du fichier)"
 
-msgid "Printer Friendly Engine"
-msgstr "Moteur d'impression"
+msgid "No conversion (gtsummary object)"
+msgstr "Pas de conversion (objet gtsummary)"
 
-msgid "Output Engine"
-msgstr "Moteur de sortie"
+msgid "gt object (HTML/PDF)"
+msgstr "Objet gt (HTML/PDF)"
+
+msgid "flextable (Word)"
+msgstr "flextable (Word)"
+
+msgid "huxtable (LaTeX/RTF)"
+msgstr "huxtable (LaTeX/RTF)"
+
+msgid "Printer Friendly Engine (Preview)"
+msgstr "Moteur d'impression (Aperçu)"
 
 msgid "Language"
 msgstr "Langue"
@@ -203,13 +178,46 @@ msgid "Chinese (zh-cn)"
 msgstr "Chinois (zh-cn)"
 
 msgid "Decimal mark"
-msgstr "Marque décimale"
+msgstr "Séparateur décimal"
 
 msgid "Big number mark"
 msgstr "Séparateur de milliers"
 
+msgid "Appearance"
+msgstr "Apparence"
+
+msgid "Display Options"
+msgstr "Options d'affichage"
+
+msgid "Output & Saving"
+msgstr "Sortie et Enregistrement"
+
 msgid "Language & Localization"
-msgstr "Langue & Localisation"
+msgstr "Langue et Localisation"
+
+msgid "Data frames"
+msgstr "Tableaux de données"
+
+msgid "Data frame to summarize"
+msgstr "Tableau à résumer"
+
+msgid "Variables to include"
+msgstr "Variables à inclure"
+
+msgid "Outer stratification (strata)"
+msgstr "Stratification externe (strata)"
+
+msgid "Inner stratification (by)"
+msgstr "Stratification interne (by)"
+
+msgid "Save result to new object"
+msgstr "Enregistrer le résultat dans un nouvel objet"
+
+msgid "Output Format"
+msgstr "Format de sortie"
+
+msgid "Save Object"
+msgstr "Enregistrer l'objet"
 
 msgid "Data"
 msgstr "Données"
@@ -218,43 +226,46 @@ msgid "Statistics"
 msgstr "Statistiques"
 
 msgid "Labels & Missing"
-msgstr "Étiquettes & Manquants"
+msgstr "Étiquettes et Manquants"
 
 msgid "Themes & Formatting"
-msgstr "Thèmes & Formatage"
+msgstr "Thèmes et Formatage"
+
+msgid "Output"
+msgstr "Sortie"
+
+msgid "Summary Table (tbl_summary)"
+msgstr "Tableau de synthèse (tbl_summary)"
+
+msgid "Creates a descriptive summary table for a data frame using gtsummary::tbl_summary()."
+msgstr "Crée un tableau de synthèse descriptif pour un data frame."
+
+msgid "Select a data frame and the variables to include."
+msgstr "Sélectionnez un tableau de données et les variables à inclure."
+
+msgid "Key Arguments"
+msgstr "Arguments clés"
+
+msgid "Use the tabs to customize statistics, formatting, themes, and handling of missing data. Use 'Outer stratification' to create grouped tables with <code>tbl_strata()</code>."
+msgstr "Utilisez les onglets pour personnaliser les statistiques et le formatage. Utilisez 'Stratification externe' pour créer des tableaux groupés avec <code>tbl_strata()</code>."
+
+msgid "Table of Summary Statistics"
+msgstr "Tableau de statistiques descriptives"
 
 msgid "Survey design objects"
-msgstr "Objets de plan d'échantillonnage"
+msgstr "Objets de plan de sondage"
 
 msgid "Survey object to summarize"
 msgstr "Objet d'enquête à résumer"
 
 msgid "Adjust for lonely PSUs (survey.lonely.psu = 'adjust')"
-msgstr "Ajuster pour les PSU isolées (survey.lonely.psu = 'adjust')"
+msgstr "Ajuster pour PSU isolées (survey.lonely.psu = 'adjust')"
 
 msgid "Survey Summary Table (tbl_svysummary)"
-msgstr "Tableau récapitulatif d'enquête (tbl_svysummary)"
-
-msgid "Survey Summary Table (gtsummary)"
-msgstr "Tableau récapitulatif d'enquête (gtsummary)"
-
-msgid "Creates a descriptive summary table for a data frame using gtsummary::tbl_summary()."
-msgstr "Crée un tableau récapitulatif descriptif pour un data frame en utilisant gtsummary::tbl_summary()."
-
-msgid "Select a data frame and the variables to include."
-msgstr "Sélectionnez un data frame et les variables à inclure."
-
-msgid "Key Arguments"
-msgstr "Arguments clés"
-
-msgid "<p>Use the tabs to customize statistics, formatting, themes, and handling of missing data. Use 'Outer stratification' to create grouped tables with <code>tbl_strata()</code>.</p>"
-msgstr "<p>Utilisez les onglets pour personnaliser les statistiques, le formatage, les thèmes et la gestion des données manquantes. Utilisez 'Stratification externe' pour créer des tableaux groupés avec <code>tbl_strata()</code>.</p>"
-
-msgid "Table of Summary Statistics"
-msgstr "Tableau de statistiques récapitulatives"
+msgstr "Tableau de synthèse d'enquête (tbl_svysummary)"
 
 msgid "Creates a descriptive summary table for a survey design object using gtsummary::tbl_svysummary()."
-msgstr "Crée un tableau récapitulatif descriptif pour un objet de plan d'échantillonnage en utilisant gtsummary::tbl_svysummary()."
+msgstr "Crée un tableau de synthèse descriptif pour un objet d'enquête."
 
 msgid "Select a survey.design object and the variables to include."
 msgstr "Sélectionnez un objet survey.design et les variables à inclure."
@@ -266,4 +277,7 @@ msgid "This dialog requires an object of class <code>survey.design</code>."
 msgstr "Ce dialogue nécessite un objet de classe <code>survey.design</code>."
 
 msgid "Table of Survey Summary Statistics"
-msgstr "Tableau de statistiques récapitulatives d'enquête"
+msgstr "Tableau de statistiques d'enquête"
+
+msgid "Survey Summary Table (gtsummary)"
+msgstr "Tableau de synthèse d'enquête (gtsummary)"

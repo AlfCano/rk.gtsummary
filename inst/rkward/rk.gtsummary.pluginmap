@@ -20,8 +20,8 @@
 		name="rk.gtsummary"
 		shortinfo="An RKWard plugin to generate summary tables using the 'gtsummary' package, supporting both standard data.frames (tbl_summary) and survey design objects (tbl_svysummary)."
 		longinfo="An RKWard plugin to generate summary tables using the 'gtsummary' package, supporting both standard data.frames (tbl_summary) and survey design objects (tbl_svysummary)."
-		version="0.1.2"
-		releasedate="2026-01-03"
+		version="0.1.3"
+		releasedate="2026-02-26"
 		url="https://github.com/rkward-community"
 		license="GPL (&gt;= 3)"
 	>

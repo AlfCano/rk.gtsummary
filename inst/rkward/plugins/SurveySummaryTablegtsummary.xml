@@ -97,8 +97,8 @@
 								</dropdown>
 								<checkbox id="cbox_compact" label="Use compact theme" value="1" />
 							</frame>
-							<frame label="Output Engine" id="frm_OtptEngn">
-								<dropdown id="drp_printer" label="Printer Friendly Engine">
+							<frame label="Display Options" id="frm_DsplyOpt">
+								<dropdown id="drp_printer" label="Printer Friendly Engine (Preview)">
 									<option label="None" value="none" checked="true" />
 									<option label="gt" value="gt" />
 									<option label="kable" value="kable" />
@@ -120,8 +120,22 @@
 							</frame>
 						</column>
 					</tab>
+					<tab label="Output" id="tab_Output">
+						<column id="clm_fOFOFCRNHT">
+							<frame label="Output Format" id="frm_OtptFrmt">
+								<dropdown id="drp_save_conversion" label="Convert object format (Reduces file size)">
+									<option label="No conversion (gtsummary object)" value="none" checked="true" />
+									<option label="gt object (HTML/PDF)" value="gt" />
+									<option label="flextable (Word)" value="flextable" />
+									<option label="huxtable (LaTeX/RTF)" value="huxtable" />
+								</dropdown>
+							</frame>
+							<frame label="Save Object" id="frm_SavObjct">
+								<saveobject label="Save result to new object" checkable="true" initial="svy_gtsummary_result" id="sav_svy_result" />
+							</frame>
+						</column>
+					</tab>
 				</tabbook>
-				<saveobject label="Save result to new object" checkable="true" checked="true" initial="svy_gtsummary_result" id="sav_svy_result" />
 			</column>
 		</row>
 	</dialog>

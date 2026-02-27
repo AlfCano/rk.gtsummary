@@ -1,47 +1,22 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: rk.gtsummary 0.1.2\n"
-"Report-Msgid-Bugs-To: https://mail.kde.org/mailman/listinfo/kde-i18n-doc\n"
-"POT-Creation-Date: 2025-01-03 13:00+0000\n"
-"PO-Revision-Date: 2025-01-03 13:00+0000\n"
-"Last-Translator: Your Name <your.email@example.com>\n"
-"Language-Team: Portuguese (Brazil) <kde-i18n-pt_BR@kde.org>\n"
-"Language: pt_BR\n"
+"Project-Id-Version: rk.gtsummary 0.1.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-26 20:00+0000\n"
+"PO-Revision-Date: 2026-02-26 20:00-0300\n"
+"Last-Translator: \n"
+"Language-Team: Portuguese <rkward-devel@kde.org>\n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.0\n"
-
-msgid "An RKWard plugin to generate summary tables using the 'gtsummary' package, supporting both standard data.frames (tbl_summary) and survey design objects (tbl_svysummary)."
-msgstr "Um plugin do RKWard para gerar tabelas de resumo usando o pacote 'gtsummary', suportando tanto data.frames padrão (tbl_summary) quanto objetos de desenho amostral (tbl_svysummary)."
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
 
 msgid "Summary Table (gtsummary)"
 msgstr "Tabela de Resumo (gtsummary)"
 
-msgid "analysis"
-msgstr "Análise"
-
-msgid "gt Summaries"
-msgstr "Resumos gt"
-
-msgid "Data frames"
-msgstr "Data frames"
-
-msgid "Data frame to summarize"
-msgstr "Data frame para resumir"
-
-msgid "Variables to include"
-msgstr "Variáveis para incluir"
-
-msgid "Outer stratification (strata)"
-msgstr "Estratificação externa (strata)"
-
-msgid "Inner stratification (by)"
-msgstr "Estratificação interna (by)"
-
-msgid "Save result to new object"
-msgstr "Salvar resultado em novo objeto"
+msgid "An RKWard plugin to generate summary tables using the 'gtsummary' package, supporting both standard data.frames (tbl_summary) and survey design objects (tbl_svysummary)."
+msgstr "Um plugin do RKWard para gerar tabelas de resumo usando o pacote 'gtsummary', suportando data.frames padrão (tbl_summary) e objetos de desenho de pesquisa (tbl_svysummary)."
 
 msgid "Statistics Definition Mode"
 msgstr "Modo de Definição de Estatísticas"
@@ -59,7 +34,7 @@ msgid "Median (IQR)"
 msgstr "Mediana (IIQ)"
 
 msgid "Median (Range)"
-msgstr "Mediana (Intervalo)"
+msgstr "Mediana (Amplitude)"
 
 msgid "Mean (SD)"
 msgstr "Média (DP)"
@@ -97,23 +72,14 @@ msgstr "Fórmula personalizada (ex: all_continuous() ~ '{mean}')"
 msgid "Custom Definition"
 msgstr "Definição Personalizada"
 
-msgid "Statistic formula"
-msgstr "Fórmula estatística"
-
-msgid "Digits formula"
-msgstr "Fórmula de dígitos"
-
 msgid "Digits formula (optional)"
 msgstr "Fórmula de dígitos (opcional)"
-
-msgid "Type formula"
-msgstr "Fórmula de tipo"
 
 msgid "Type formula (optional)"
 msgstr "Fórmula de tipo (opcional)"
 
 msgid "Percentage basis (percent)"
-msgstr "Base de porcentagem (percent)"
+msgstr "Base da porcentagem (percent)"
 
 msgid "Column"
 msgstr "Coluna"
@@ -125,13 +91,10 @@ msgid "Cell"
 msgstr "Célula"
 
 msgid "Use RKWard variable labels (rk.get.label)"
-msgstr "Usar rótulos de variável RKWard (rk.get.label)"
+msgstr "Usar rótulos de variáveis do RKWard"
 
 msgid "Custom label formula"
 msgstr "Fórmula de rótulo personalizada"
-
-msgid "Variable Labels"
-msgstr "Rótulos de Variável"
 
 msgid "Show missing values (missing)"
 msgstr "Mostrar valores ausentes (missing)"
@@ -146,13 +109,16 @@ msgid "Always"
 msgstr "Sempre"
 
 msgid "Missing value text (missing_text)"
-msgstr "Texto para valor ausente (missing_text)"
+msgstr "Texto para valores ausentes"
+
+msgid "Variable Labels"
+msgstr "Rótulos das Variáveis"
 
 msgid "Missing Values"
 msgstr "Valores Ausentes"
 
 msgid "Journal Theme"
-msgstr "Tema de Jornal"
+msgstr "Tema da Revista (Journal)"
 
 msgid "None"
 msgstr "Nenhum"
@@ -172,14 +138,23 @@ msgstr "QJ Econ"
 msgid "Use compact theme"
 msgstr "Usar tema compacto"
 
-msgid "Appearance"
-msgstr "Aparência"
+msgid "Convert object format (Reduces file size)"
+msgstr "Converter formato do objeto (Reduz tamanho do arquivo)"
 
-msgid "Printer Friendly Engine"
-msgstr "Motor de Impressão Amigável"
+msgid "No conversion (gtsummary object)"
+msgstr "Sem conversão (objeto gtsummary)"
 
-msgid "Output Engine"
-msgstr "Motor de Saída"
+msgid "gt object (HTML/PDF)"
+msgstr "Objeto gt (HTML/PDF)"
+
+msgid "flextable (Word)"
+msgstr "flextable (Word)"
+
+msgid "huxtable (LaTeX/RTF)"
+msgstr "huxtable (LaTeX/RTF)"
+
+msgid "Printer Friendly Engine (Preview)"
+msgstr "Motor de Impressão (Visualização)"
 
 msgid "Language"
 msgstr "Idioma"
@@ -203,13 +178,46 @@ msgid "Chinese (zh-cn)"
 msgstr "Chinês (zh-cn)"
 
 msgid "Decimal mark"
-msgstr "Marca decimal"
+msgstr "Separador decimal"
 
 msgid "Big number mark"
-msgstr "Marca de milhar"
+msgstr "Separador de milhares"
+
+msgid "Appearance"
+msgstr "Aparência"
+
+msgid "Display Options"
+msgstr "Opções de Exibição"
+
+msgid "Output & Saving"
+msgstr "Saída e Salvamento"
 
 msgid "Language & Localization"
-msgstr "Idioma & Localização"
+msgstr "Idioma e Localização"
+
+msgid "Data frames"
+msgstr "Data frames"
+
+msgid "Data frame to summarize"
+msgstr "Data frame para resumir"
+
+msgid "Variables to include"
+msgstr "Variáveis para incluir"
+
+msgid "Outer stratification (strata)"
+msgstr "Estratificação externa (strata)"
+
+msgid "Inner stratification (by)"
+msgstr "Estratificação interna (by)"
+
+msgid "Save result to new object"
+msgstr "Salvar resultado em novo objeto"
+
+msgid "Output Format"
+msgstr "Formato de Saída"
+
+msgid "Save Object"
+msgstr "Salvar Objeto"
 
 msgid "Data"
 msgstr "Dados"
@@ -218,13 +226,34 @@ msgid "Statistics"
 msgstr "Estatísticas"
 
 msgid "Labels & Missing"
-msgstr "Rótulos & Ausentes"
+msgstr "Rótulos e Ausentes"
 
 msgid "Themes & Formatting"
-msgstr "Temas & Formatação"
+msgstr "Temas e Formatação"
+
+msgid "Output"
+msgstr "Saída"
+
+msgid "Summary Table (tbl_summary)"
+msgstr "Tabela de Resumo (tbl_summary)"
+
+msgid "Creates a descriptive summary table for a data frame using gtsummary::tbl_summary()."
+msgstr "Cria uma tabela de resumo descritiva para um data frame usando gtsummary::tbl_summary()."
+
+msgid "Select a data frame and the variables to include."
+msgstr "Selecione um data frame e as variáveis para incluir."
+
+msgid "Key Arguments"
+msgstr "Argumentos Principais"
+
+msgid "Use the tabs to customize statistics, formatting, themes, and handling of missing data. Use 'Outer stratification' to create grouped tables with <code>tbl_strata()</code>."
+msgstr "Use as abas para personalizar estatísticas, formatação e dados ausentes. Use 'Estratificação externa' para criar tabelas agrupadas com <code>tbl_strata()</code>."
+
+msgid "Table of Summary Statistics"
+msgstr "Tabela de Estatísticas de Resumo"
 
 msgid "Survey design objects"
-msgstr "Objetos de desenho amostral"
+msgstr "Objetos de desenho de pesquisa"
 
 msgid "Survey object to summarize"
 msgstr "Objeto de pesquisa para resumir"
@@ -235,35 +264,20 @@ msgstr "Ajustar para UPAs solitárias (survey.lonely.psu = 'adjust')"
 msgid "Survey Summary Table (tbl_svysummary)"
 msgstr "Tabela de Resumo de Pesquisa (tbl_svysummary)"
 
-msgid "Survey Summary Table (gtsummary)"
-msgstr "Tabela de Resumo de Pesquisa (gtsummary)"
-
-msgid "Creates a descriptive summary table for a data frame using gtsummary::tbl_summary()."
-msgstr "Cria uma tabela de resumo descritiva para um data frame usando gtsummary::tbl_summary()."
-
-msgid "Select a data frame and the variables to include."
-msgstr "Selecione um data frame e as variáveis para incluir."
-
-msgid "Key Arguments"
-msgstr "Argumentos Chave"
-
-msgid "<p>Use the tabs to customize statistics, formatting, themes, and handling of missing data. Use 'Outer stratification' to create grouped tables with <code>tbl_strata()</code>.</p>"
-msgstr "<p>Use as abas para personalizar estatísticas, formatação, temas e tratamento de dados ausentes. Use 'Estratificação externa' para criar tabelas agrupadas com <code>tbl_strata()</code>.</p>"
-
-msgid "Table of Summary Statistics"
-msgstr "Tabela de Estatísticas de Resumo"
-
 msgid "Creates a descriptive summary table for a survey design object using gtsummary::tbl_svysummary()."
-msgstr "Cria uma tabela de resumo descritiva para um objeto de desenho amostral usando gtsummary::tbl_svysummary()."
+msgstr "Cria uma tabela de resumo descritiva para um objeto de pesquisa."
 
 msgid "Select a survey.design object and the variables to include."
 msgstr "Selecione um objeto survey.design e as variáveis para incluir."
 
 msgid "Key Difference"
-msgstr "Diferença Chave"
+msgstr "Diferença Principal"
 
 msgid "This dialog requires an object of class <code>survey.design</code>."
 msgstr "Este diálogo requer um objeto da classe <code>survey.design</code>."
 
 msgid "Table of Survey Summary Statistics"
 msgstr "Tabela de Estatísticas de Resumo de Pesquisa"
+
+msgid "Survey Summary Table (gtsummary)"
+msgstr "Tabela de Resumo de Pesquisa (gtsummary)"

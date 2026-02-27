@@ -60,7 +60,7 @@
 		</setting>
 		<setting id="cbox_compact">
 		</setting>
-		<caption id="frm_OtptEngn" />
+		<caption id="frm_DsplyOpt" />
 		<setting id="drp_printer">
 		</setting>
 		<caption id="frm_LnggLclz" />
@@ -70,6 +70,11 @@
 		</setting>
 		<setting id="inp_big_mark">
 		</setting>
+		<caption id="tab_Output" />
+		<caption id="frm_OtptFrmt" />
+		<setting id="drp_save_conversion">
+		</setting>
+		<caption id="frm_SavObjct" />
 		<setting id="sav_tbl_summary_result">
 		</setting>
 	</settings>

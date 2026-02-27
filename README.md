@@ -1,6 +1,6 @@
 # rk.gtsummary: Publication-Ready Summary Tables
 
-![Version](https://img.shields.io/badge/Version-0.1.2-blue.svg)
+![Version](https://img.shields.io/badge/Version-0.1.3-blue.svg)
 ![License](https://img.shields.io/badge/License-GPLv3-blue.svg)
 ![RKWard](https://img.shields.io/badge/Platform-RKWard-green)
 [![R Linter](https://github.com/AlfCano/rk.gtsummary/actions/workflows/lintr.yml/badge.svg)](https://github.com/AlfCano/rk.gtsummary/actions/workflows/lintr.yml)
@@ -8,6 +8,16 @@
 An RKWard plugin for creating beautiful, publication-ready summary tables using the powerful `{gtsummary}` package.
 
 This plugin provides a user-friendly graphical interface for the `tbl_summary` and `tbl_svysummary` functions, allowing for easy generation of descriptive statistics tables for both standard data frames and complex survey designs.
+
+## What's New in Version 0.1.3
+
+*   **File Size Optimization (Output Formats):** Summary tables can be huge because they store a copy of the raw dataset. You can now choose to **convert** the table before saving it to a lightweight format:
+    *   `gt` (Best for HTML/PDF)
+    *   `flextable` (Best for Word)
+    *   `huxtable` (Best for LaTeX/RTF)
+    *   *Or keep it as a raw `gtsummary` object for further modification.*
+*   **Improved Workflow:** A new **"Output"** tab has been added to separate the calculation logic from the saving/exporting logic.
+*   **Safe Defaults:** The "Save object" checkbox is now unchecked by default to prevent accidental overwriting or workspace clutter.
 
 ## What's New in Version 0.1.2
 
@@ -18,10 +28,6 @@ This plugin provides a user-friendly graphical interface for the `tbl_summary` a
     *   🇫🇷 French (`fr`)
     *   🇩🇪 German (`de`)
     *   🇧🇷 Portuguese (Brazil) (`pt_BR`)
-
-## What's New in Version 0.1.1
-
-*   **Survey Data Support:** Added a **checkbox** to "Adjust for lonely PSUs (`survey.lonely.psu = 'adjust'`)" in the Data tab of the Survey Summary Table dialog.
 
 ## Features
 
@@ -39,6 +45,7 @@ This plugin provides a user-friendly graphical interface for the `tbl_summary` a
     -   Use a compact theme for a condensed look.
     -   Set a printer-friendly output engine (`gt`, `kable`, etc.).
     -   Easily configure language and localization settings (e.g., decimal marks).
+-   **Workspace Management**: Option to strip raw data from output objects to keep your `.RData` files small and manageable.
 
 ## Installation
 
@@ -71,13 +78,22 @@ You will see two options:
 -   **Summary Table (gtsummary)**: Use this for standard `data.frame` objects.
 -   **Survey Summary Table (gtsummary)**: Use this for `survey.design` objects.
 
-Select the appropriate option, choose your data and variables in the dialog, customize the options in the tabs, and click "Submit" to generate the table.
+**Workflow:**
+1.  **Data Tab:** Select your dataset and variables.
+2.  **Statistics Tab:** Choose how to present means, medians, or percentages.
+3.  **Themes Tab:** Apply journal themes or languages.
+4.  **Output Tab:** Choose whether to convert the object (e.g., to `flextable` for Word export) and save it to your workspace.
 
 ## Dependencies
 
 This plugin requires the following R packages to be installed:
 -   `gtsummary`
 -   `survey`
+
+*Optional but recommended for export features:*
+-   `gt`
+-   `flextable`
+-   `huxtable`
 
 ## Author
 
