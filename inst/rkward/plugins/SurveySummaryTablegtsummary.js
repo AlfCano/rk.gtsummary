@@ -17,6 +17,15 @@ function calculate(is_preview){
     var svy_object = getValue("var_svy_data");
     if(!svy_object) return;
 
+    // ---> AGREGAR ESTAS LÍNEAS <---
+
+    var subset_cond = getValue("inp_svy_filter");
+    if(subset_cond) {
+        svy_object = "subset(" + svy_object + ", " + subset_cond + ")";
+    }
+
+    // -----------------------------
+
     if(getValue("cbox_svy_lonely_psu") == "1"){
       echo("options(survey.lonely.psu = \"adjust\")\n\n");
     }

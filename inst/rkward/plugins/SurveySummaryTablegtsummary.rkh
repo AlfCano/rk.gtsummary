@@ -20,6 +20,8 @@
 		<caption id="tab_Data" />
 		<setting id="var_svy_data">
 		</setting>
+		<setting id="inp_svy_filter">
+		</setting>
 		<setting id="var_svy_include">
 		</setting>
 		<setting id="var_svy_strata">

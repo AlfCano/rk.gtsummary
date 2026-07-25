@@ -5,7 +5,7 @@ local({
 
   # --- GLOBAL SETTINGS ---
   plugin_name <- "rk.gtsummary"
-  plugin_version <- "0.1.3"
+  plugin_version <- "0.1.4"
 
   # =========================================================================================
   # PACKAGE DEFINITION (GLOBAL METADATA)
@@ -173,6 +173,9 @@ local({
   tbl_summary_strata_slot <- rk.XML.varslot(id.name = "var_tbl_summary_strata", label = "Outer stratification (strata)", source = "slc_tbl_summary_source")
   tbl_summary_by_slot <- rk.XML.varslot(id.name = "var_tbl_summary_by", label = "Inner stratification (by)", source = "slc_tbl_summary_source")
 
+    # ---> AGREGAR ESTA LÍNEA <---
+  tbl_summary_filter <- rk.XML.input(id.name = "inp_tbl_summary_filter", label = "Optional: subset() condition (e.g., age > 18)")
+
   # CHANGED: chk = FALSE
   tbl_summary_save_object <- rk.XML.saveobj(id.name = "sav_tbl_summary_result", label = "Save result to new object", chk = FALSE, initial = "gtsummary_result")
 
@@ -183,7 +186,7 @@ local({
   )
 
   tbl_summary_tabbook <- rk.XML.tabbook(tabs = list(
-      "Data" = rk.XML.col(tbl_summary_data_slot, tbl_summary_include_slot, tbl_summary_strata_slot, tbl_summary_by_slot),
+      "Data" = rk.XML.col(tbl_summary_data_slot, tbl_summary_filter, tbl_summary_include_slot, tbl_summary_strata_slot, tbl_summary_by_slot),
       "Statistics" = stats_tab_content,
       "Labels & Missing" = labels_tab_content,
       "Themes & Formatting" = themes_tab_content,
@@ -209,6 +212,13 @@ local({
     '
     var data_frame = getValue("var_tbl_summary_data");
     if(!data_frame) return;
+
+        // ---> AGREGAR ESTAS LÍNEAS <---
+    var subset_cond = getValue("inp_tbl_summary_filter");
+    if(subset_cond) {
+        data_frame = "subset(" + data_frame + ", " + subset_cond + ")";
+    }
+    // -----------------------------
 
     var journal = getValue("drp_journal");
     var compact = getValue("cbox_compact");
@@ -322,6 +332,9 @@ local({
   svy_by_slot <- rk.XML.varslot(id.name = "var_svy_by", label = "Inner stratification (by)", source = "slc_svy_source")
   attr(svy_by_slot, "source_property") <- "variables"
 
+  # ---> AGREGAR ESTA LÍNEA <---
+  svy_filter <- rk.XML.input(id.name = "inp_svy_filter", label = "Optional: subset() condition (e.g., age > 18)")
+
   # CHANGED: chk = FALSE
   svy_save_object <- rk.XML.saveobj(id.name = "sav_svy_result", label = "Save result to new object", chk = FALSE, initial = "svy_gtsummary_result")
 
@@ -334,6 +347,7 @@ local({
   svy_tabbook <- rk.XML.tabbook(tabs = list(
       "Data" = rk.XML.col(
         svy_data_slot,
+        svy_filter,
         svy_include_slot,
         svy_strata_slot,
         svy_by_slot,
@@ -364,6 +378,15 @@ local({
     '
     var svy_object = getValue("var_svy_data");
     if(!svy_object) return;
+
+    // ---> AGREGAR ESTAS LÍNEAS <---
+
+    var subset_cond = getValue("inp_svy_filter");
+    if(subset_cond) {
+        svy_object = "subset(" + svy_object + ", " + subset_cond + ")";
+    }
+
+    // -----------------------------
 
     if(getValue("cbox_svy_lonely_psu") == "1"){
       echo("options(survey.lonely.psu = \\"adjust\\")\\n\\n");

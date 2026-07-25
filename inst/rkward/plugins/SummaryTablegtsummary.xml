@@ -19,15 +19,16 @@
 		-->
 	</logic>
 	<dialog label="Summary Table (tbl_summary)">
-		<row id="row_cDDDDDVOID">
+		<row id="row_cDDDDDO18V">
 			<column id="clm_vrslctrdsD">
 				<varselector id="slc_tbl_summary_source" label="Data frames" />
 			</column>
-			<column id="clm_tDDDVOIDVO">
+			<column id="clm_tDDDO18VOI">
 				<tabbook>
 					<tab label="Data" id="tab_Data">
-						<column id="clm_vrsltdDVOI">
+						<column id="clm_vrsDO18VOI">
 							<varslot id="var_tbl_summary_data" label="Data frame to summarize" source="slc_tbl_summary_source" classes="data.frame" required="true" />
+							<input label="Optional: subset() condition (e.g., age &gt; 18)" id="inp_tbl_summary_filter" />
 							<varslot id="var_tbl_summary_include" label="Variables to include" source="slc_tbl_summary_source" multi="true" />
 							<varslot id="var_tbl_summary_strata" label="Outer stratification (strata)" source="slc_tbl_summary_source" />
 							<varslot id="var_tbl_summary_by" label="Inner stratification (by)" source="slc_tbl_summary_source" />

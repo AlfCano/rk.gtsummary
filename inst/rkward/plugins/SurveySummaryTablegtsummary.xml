@@ -19,15 +19,16 @@
 		-->
 	</logic>
 	<dialog label="Survey Summary Table (tbl_svysummary)">
-		<row id="row_cSSDDSVOIA">
+		<row id="row_cSSDDSO18V">
 			<column id="clm_vrslctrdsS">
 				<varselector id="slc_svy_source" label="Survey design objects" />
 			</column>
-			<column id="clm_tDDSVOIAPS">
+			<column id="clm_tDDSO18VOI">
 				<tabbook>
 					<tab label="Data" id="tab_Data">
-						<column id="clm_vSVOIAPSU1">
+						<column id="clm_vSO18VOIAP">
 							<varslot id="var_svy_data" label="Survey object to summarize" source="slc_svy_source" required="true" />
+							<input label="Optional: subset() condition (e.g., age &gt; 18)" id="inp_svy_filter" />
 							<varslot id="var_svy_include" label="Variables to include" source="slc_svy_source" multi="true" />
 							<varslot id="var_svy_strata" label="Outer stratification (strata)" source="slc_svy_source" />
 							<varslot id="var_svy_by" label="Inner stratification (by)" source="slc_svy_source" />

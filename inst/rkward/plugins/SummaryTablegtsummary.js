@@ -17,6 +17,13 @@ function calculate(is_preview){
     var data_frame = getValue("var_tbl_summary_data");
     if(!data_frame) return;
 
+        // ---> AGREGAR ESTAS LÍNEAS <---
+    var subset_cond = getValue("inp_tbl_summary_filter");
+    if(subset_cond) {
+        data_frame = "subset(" + data_frame + ", " + subset_cond + ")";
+    }
+    // -----------------------------
+
     var journal = getValue("drp_journal");
     var compact = getValue("cbox_compact");
     var printer = getValue("drp_printer");

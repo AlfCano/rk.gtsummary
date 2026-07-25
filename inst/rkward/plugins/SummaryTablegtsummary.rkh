@@ -20,6 +20,8 @@
 		<caption id="tab_Data" />
 		<setting id="var_tbl_summary_data">
 		</setting>
+		<setting id="inp_tbl_summary_filter">
+		</setting>
 		<setting id="var_tbl_summary_include">
 		</setting>
 		<setting id="var_tbl_summary_strata">

@@ -1,6 +1,6 @@
 # rk.gtsummary: Publication-Ready Summary Tables
 
-![Version](https://img.shields.io/badge/Version-0.1.3-blue.svg)
+![Version](https://img.shields.io/badge/Version-0.1.4-blue.svg)
 ![License](https://img.shields.io/badge/License-GPLv3-blue.svg)
 ![RKWard](https://img.shields.io/badge/Platform-RKWard-green)
 [![R Linter](https://github.com/AlfCano/rk.gtsummary/actions/workflows/lintr.yml/badge.svg)](https://github.com/AlfCano/rk.gtsummary/actions/workflows/lintr.yml)
@@ -8,6 +8,13 @@
 An RKWard plugin for creating beautiful, publication-ready summary tables using the powerful `{gtsummary}` package.
 
 This plugin provides a user-friendly graphical interface for the `tbl_summary` and `tbl_svysummary` functions, allowing for easy generation of descriptive statistics tables for both standard data frames and complex survey designs.
+
+## 🚀 What's New in Version 0.1.4
+
+* **Dynamic Data Filtering (`subset()`):** A highly requested feature! You can now filter your data directly from the plugin interface. A new "Optional: subset() condition" field has been added to the Data tab for both the **Data Frame (`tbl_summary`)** and **Survey (`tbl_svysummary`)** components.
+* **Cleaner Workspaces:** Instead of manually creating multiple pre-filtered datasets or survey designs in your R environment, simply type your condition (e.g., `age > 18` or `gender == 'Female'`) and the plugin will automatically apply base R's `subset()` function on-the-fly during table generation.
+* **i18n Updates:** The new filtering interface has been fully translated into Spanish, French, German, and Portuguese (Brazil).
+
 
 ## What's New in Version 0.1.3
 
