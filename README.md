@@ -56,17 +56,17 @@ This plugin provides a user-friendly graphical interface for the `tbl_summary` a
 
 ## Installation
 
-This plugin is not yet on CRAN. To install it, you need the `{devtools}` (or `{remotes}`) package.
+This plugin is not yet on CRAN. To install it, you need the `{remotes}` (or `{devtools}`) package.
 
 1.  **Open RKWard**.
 2.  **Run the following command** in the R console:
 
     ```R
-    # If you don't have devtools installed:
-    # install.packages("devtools")
+    # If you don't have remotes installed:
+    # install.packages("remotes")
     
     local({
-      require(devtools)
+      require(remotes)
       install_github("AlfCano/rk.gtsummary", force = TRUE)
     })
     ```
