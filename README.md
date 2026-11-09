@@ -19,6 +19,7 @@
 *   **One-Click Odds Ratios:** Easily fit Logistic Regression models (Binomial or Quasi-binomial) and simply check a box to exponentiate your coefficients into Odds Ratios automatically.
 *   **Global P-Values:** Automatically compute and display global p-values for categorical predictors (using Wald tests for surveys and ANOVA for standard data) with a single click.
 *   **Unified Output Formats:** Just like the summary tables, your regression outputs can be converted instantly to `gt` (HTML/PDF), `flextable` (Word), or `huxtable` (LaTeX) to match your exact publication needs.
+*   **Universal Hybrid Workflow:** Already have a complex model built in the R console (e.g., Mixed Effects `lme4`, Survival `coxph`, or custom `svyglm`)? Pass your pre-existing model directly into the GUI. The plugin will intelligently detect the model family, calculate the correct metrics (including survey Pseudo-R²), and format the table perfectly for publication.
 
 
 ## 🚀 What's New in Version 0.1.4
@@ -124,6 +125,12 @@ This plugin adds a comprehensive suite of 4 analytical tools under the **Analysi
 *   Automatically protects your weighted structures while fitting regression models.
 *   Choose between Gaussian, Quasi-binomial, and Quasi-poisson families.
 *   Seamlessly extracts the much-needed pseudo-$R^2$ for your social science or demographic research.
+
+### 5. Table for Existing Models (Hybrid Workflow)
+*For advanced users who code their models but hate formatting tables manually.*
+*   **Model Selection:** Simply select any trained model (Linear, Logistic, Survival, Mixed Effects, or Survey) from your workspace.
+*   **Smart Formatting:** Tell the GUI to exponentiate the coefficients, and it will automatically label them as *Odds Ratios* or *Hazard Ratios* based on the model's math.
+*   **Fit Statistics:** It dynamically extracts Pseudo-R² for survey models or standard AIC/BIC for regular models, appending them beautifully to the bottom of the table.
 
 ---
 
