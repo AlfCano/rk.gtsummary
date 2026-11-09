@@ -11,12 +11,7 @@
 		</dependencies>
 	-->
 	<logic>
-		<!--
-			<convert id="!edit!" sources="!edit!" mode="equals" standard="!edit!" />
-		-->
-		<!--
-			<connect governor="!edit!.state" client="!edit!.enabled" />
-		-->
+		<connect governor="var_tbl_summary_data.available" client="slc_tbl_summary_source.root" />
 	</logic>
 	<dialog label="Summary Table (tbl_summary)">
 		<row id="row_cDDDDDO18V">

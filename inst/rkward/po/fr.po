@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: rk.gtsummary 0.1.4\n"
+"Project-Id-Version: rk.gtsummary 0.2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-26 20:00+0000\n"
-"PO-Revision-Date: 2026-02-26 20:00+0100\n"
+"PO-Revision-Date: 2026-11-09 11:08-0600\n"
 "Last-Translator: \n"
 "Language-Team: French <rkward-devel@kde.org>\n"
 "Language: fr\n"
@@ -11,12 +11,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Poedit 3.4.2\n"
 
 msgid "Summary Table (gtsummary)"
 msgstr "Tableau de synthèse (gtsummary)"
 
-msgid "An RKWard plugin to generate summary tables using the 'gtsummary' package, supporting both standard data.frames (tbl_summary) and survey design objects (tbl_svysummary)."
-msgstr "Un plugin RKWard pour générer des tableaux de synthèse avec le paquet 'gtsummary', supportant les data.frames (tbl_summary) et les plans de sondage (tbl_svysummary)."
+msgid ""
+"An RKWard plugin to generate summary tables using the 'gtsummary' package, "
+"supporting both standard data.frames (tbl_summary) and survey design objects "
+"(tbl_svysummary)."
+msgstr ""
+"Un plugin RKWard pour générer des tableaux de synthèse avec le paquet "
+"'gtsummary', supportant les data.frames (tbl_summary) et les plans de "
+"sondage (tbl_svysummary)."
 
 msgid "Statistics Definition Mode"
 msgstr "Mode de définition des statistiques"
@@ -237,7 +244,9 @@ msgstr "Sortie"
 msgid "Summary Table (tbl_summary)"
 msgstr "Tableau de synthèse (tbl_summary)"
 
-msgid "Creates a descriptive summary table for a data frame using gtsummary::tbl_summary()."
+msgid ""
+"Creates a descriptive summary table for a data frame using gtsummary::"
+"tbl_summary()."
 msgstr "Crée un tableau de synthèse descriptif pour un data frame."
 
 msgid "Select a data frame and the variables to include."
@@ -246,8 +255,14 @@ msgstr "Sélectionnez un tableau de données et les variables à inclure."
 msgid "Key Arguments"
 msgstr "Arguments clés"
 
-msgid "Use the tabs to customize statistics, formatting, themes, and handling of missing data. Use 'Outer stratification' to create grouped tables with <code>tbl_strata()</code>."
-msgstr "Utilisez les onglets pour personnaliser les statistiques et le formatage. Utilisez 'Stratification externe' pour créer des tableaux groupés avec <code>tbl_strata()</code>."
+msgid ""
+"Use the tabs to customize statistics, formatting, themes, and handling of "
+"missing data. Use 'Outer stratification' to create grouped tables with "
+"<code>tbl_strata()</code>."
+msgstr ""
+"Utilisez les onglets pour personnaliser les statistiques et le formatage. "
+"Utilisez 'Stratification externe' pour créer des tableaux groupés avec "
+"<code>tbl_strata()</code>."
 
 msgid "Table of Summary Statistics"
 msgstr "Tableau de statistiques descriptives"
@@ -264,7 +279,9 @@ msgstr "Ajuster pour PSU isolées (survey.lonely.psu = 'adjust')"
 msgid "Survey Summary Table (tbl_svysummary)"
 msgstr "Tableau de synthèse d'enquête (tbl_svysummary)"
 
-msgid "Creates a descriptive summary table for a survey design object using gtsummary::tbl_svysummary()."
+msgid ""
+"Creates a descriptive summary table for a survey design object using "
+"gtsummary::tbl_svysummary()."
 msgstr "Crée un tableau de synthèse descriptif pour un objet d'enquête."
 
 msgid "Select a survey.design object and the variables to include."
@@ -284,3 +301,110 @@ msgstr "Tableau de synthèse d'enquête (gtsummary)"
 
 msgid "Optional: subset() condition (e.g., age > 18)"
 msgstr "Optionnel: Condition subset() (ex., age > 18)"
+
+msgid "Survey object"
+msgstr "Objet d'enquête"
+
+msgid "Dependent Variable (Y)"
+msgstr "Variable Dépendante (Y)"
+
+msgid "Independent Variables (X)"
+msgstr "Variables Indépendantes (X)"
+
+msgid "Model Family"
+msgstr "Famille du Modèle"
+
+msgid "Gaussian (Linear Regression)"
+msgstr "Gaussienne (Régression Linéaire)"
+
+msgid "Quasi-binomial (Logistic Reg. / Odds Ratios)"
+msgstr "Quasi-binomiale (Rég. Logistique / Odds Ratios)"
+
+msgid "Quasi-poisson (Count Data)"
+msgstr "Quasi-poisson (Données de comptage)"
+
+msgid "Exponentiate coefficients (e.g., for Odds Ratios)"
+msgstr "Exponentier les coefficients (ex., pour les Odds Ratios)"
+
+msgid "Add model fit statistics at bottom (N, AIC, R² / Pseudo-R²)"
+msgstr "Ajouter les statistiques d'ajustement en bas (N, AIC, R² / Pseudo-R²)"
+
+msgid "Add global p-values for categorical predictors (Wald tests)"
+msgstr ""
+"Ajouter les p-values globales pour les prédicteurs catégoriels (Tests de "
+"Wald)"
+
+msgid "Save svyglm model object as:"
+msgstr "Enregistrer l'objet du modèle svyglm sous :"
+
+msgid "Save gtsummary table object as:"
+msgstr "Enregistrer l'objet table gtsummary sous :"
+
+msgid "Model Configuration"
+msgstr "Configuration du Modèle"
+
+msgid "Table Options"
+msgstr "Options de la Table"
+
+msgid "Save Objects"
+msgstr "Enregistrer les Objets"
+
+msgid "Survey Regression Model (svyglm & tbl_regression)"
+msgstr "Modèle de Régression d'Enquête (svyglm et tbl_regression)"
+
+msgid "Survey Regression Model (svyglm)"
+msgstr "Modèle de Régression d'Enquête (svyglm)"
+
+msgid "Survey Regression Table (svyglm & tbl_regression)"
+msgstr "Table de Régression d'Enquête (svyglm et tbl_regression)"
+
+msgid "Standard Data Frames"
+msgstr "Blocs de données standard (Data frames)"
+
+msgid "Data frame"
+msgstr "Bloc de données (Data frame)"
+
+msgid "Binomial (Logistic Regression / Odds Ratios)"
+msgstr "Binomiale (Régression Logistique / Odds Ratios)"
+
+msgid "Poisson (Count Data)"
+msgstr "Poisson (Données de comptage)"
+
+msgid "Exponentiate coefficients (e.g., for Odds Ratios in Logistic)"
+msgstr "Exponentier les coefficients (ex., pour les Odds Ratios en Logistique)"
+
+msgid "Add model fit statistics at bottom (N, AIC, R²)"
+msgstr "Ajouter les statistiques d'ajustement en bas (N, AIC, R²)"
+
+msgid "Add global p-values for categorical predictors (ANOVA)"
+msgstr "Ajouter les p-values globales pour les prédicteurs catégoriels (ANOVA)"
+
+msgid "Save glm model object as:"
+msgstr "Enregistrer l'objet du modèle glm sous :"
+
+msgid "Standard Regression Model (glm & tbl_regression)"
+msgstr "Modèle de Régression Standard (glm et tbl_regression)"
+
+msgid "Standard Regression Model (glm)"
+msgstr "Modèle de Régression Standard (glm)"
+
+msgid "Standard Regression Table (glm & tbl_regression)"
+msgstr "Table de Régression Standard (glm et tbl_regression)"
+
+msgid "Table for Existing Models (tbl_regression)"
+msgstr "Tableau pour Modèles Existants (tbl_regression)"
+
+msgid "Select Model from Workspace"
+msgstr "Sélectionner le Modèle depuis l'Espace de Travail"
+
+msgid "Exponentiate coefficients (e.g., for Odds Ratios or Hazard Ratios)"
+msgstr "Exponentier les coefficients (ex., pour Odds Ratios ou Hazard Ratios)"
+
+msgid "Add global p-values for categorical predictors (Wald/ANOVA)"
+msgstr "Ajouter les p-values globales pour les prédicteurs catégoriels (Wald/ANOVA)"
+
+msgid "Model Selection & Options"
+msgstr "Sélection du Modèle & Options"
+
+msgid "Summary Table for Existing Model (tbl_regression)"
+msgstr "Tableau Récapitulatif pour Modèle Existant (tbl_regression)"

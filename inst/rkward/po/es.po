@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: rk.gtsummary 0.1.4\n"
+"Project-Id-Version: rk.gtsummary 0.2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-26 20:00+0000\n"
-"PO-Revision-Date: 2026-02-26 20:00-0600\n"
+"PO-Revision-Date: 2026-11-09 11:08-0600\n"
 "Last-Translator: Alfonso Cano <alfonso.cano@correo.buap.mx>\n"
 "Language-Team: Spanish <rkward-devel@kde.org>\n"
 "Language: es\n"
@@ -11,12 +11,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 3.4.2\n"
 
 msgid "Summary Table (gtsummary)"
 msgstr "Tabla de Resumen (gtsummary)"
 
-msgid "An RKWard plugin to generate summary tables using the 'gtsummary' package, supporting both standard data.frames (tbl_summary) and survey design objects (tbl_svysummary)."
-msgstr "Un plugin de RKWard para generar tablas de resumen utilizando el paquete 'gtsummary', compatible con data.frames estándar (tbl_summary) y objetos de diseño muestral (tbl_svysummary)."
+msgid ""
+"An RKWard plugin to generate summary tables using the 'gtsummary' package, "
+"supporting both standard data.frames (tbl_summary) and survey design objects "
+"(tbl_svysummary)."
+msgstr ""
+"Un plugin de RKWard para generar tablas de resumen utilizando el paquete "
+"'gtsummary', compatible con data.frames estándar (tbl_summary) y objetos de "
+"diseño muestral (tbl_svysummary)."
 
 msgid "Statistics Definition Mode"
 msgstr "Modo de definición de estadísticas"
@@ -237,8 +244,12 @@ msgstr "Salida"
 msgid "Summary Table (tbl_summary)"
 msgstr "Tabla de Resumen (tbl_summary)"
 
-msgid "Creates a descriptive summary table for a data frame using gtsummary::tbl_summary()."
-msgstr "Crea una tabla de resumen descriptiva para un data frame usando gtsummary::tbl_summary()."
+msgid ""
+"Creates a descriptive summary table for a data frame using gtsummary::"
+"tbl_summary()."
+msgstr ""
+"Crea una tabla de resumen descriptiva para un data frame usando gtsummary::"
+"tbl_summary()."
 
 msgid "Select a data frame and the variables to include."
 msgstr "Seleccione un data frame y las variables a incluir."
@@ -246,14 +257,25 @@ msgstr "Seleccione un data frame y las variables a incluir."
 msgid "Key Arguments"
 msgstr "Argumentos clave"
 
-msgid "Use the tabs to customize statistics, formatting, themes, and handling of missing data. Use 'Outer stratification' to create grouped tables with <code>tbl_strata()</code>."
-msgstr "Utilice las pestañas para personalizar estadísticas, formato, temas y manejo de datos faltantes. Use 'Estratificación externa' para crear tablas agrupadas con <code>tbl_strata()</code>."
+msgid ""
+"Use the tabs to customize statistics, formatting, themes, and handling of "
+"missing data. Use 'Outer stratification' to create grouped tables with "
+"<code>tbl_strata()</code>."
+msgstr ""
+"Utilice las pestañas para personalizar estadísticas, formato, temas y manejo "
+"de datos faltantes. Use 'Estratificación externa' para crear tablas "
+"agrupadas con <code>tbl_strata()</code>."
 
 msgid "Table of Summary Statistics"
 msgstr "Tabla de Estadísticas de Resumen"
 
+#, fuzzy
 msgid "Survey design objects"
-msgstr "Objetos de diseño muestral"
+msgstr ""
+"#-#-#-#-#  catalog.po (rk.gtsummary 0.2.0)  #-#-#-#-#\n"
+"Objetos de diseño muestral\n"
+"#-#-#-#-#  catalog.po (rk.gtsummary 0.2.0)  #-#-#-#-#\n"
+"Objetos de diseño de encuesta"
 
 msgid "Survey object to summarize"
 msgstr "Objeto de encuesta a resumir"
@@ -264,8 +286,12 @@ msgstr "Ajustar por UPM solitarias (survey.lonely.psu = 'adjust')"
 msgid "Survey Summary Table (tbl_svysummary)"
 msgstr "Tabla de Resumen de Encuesta (tbl_svysummary)"
 
-msgid "Creates a descriptive summary table for a survey design object using gtsummary::tbl_svysummary()."
-msgstr "Crea una tabla de resumen descriptiva para un objeto de diseño de encuesta usando gtsummary::tbl_svysummary()."
+msgid ""
+"Creates a descriptive summary table for a survey design object using "
+"gtsummary::tbl_svysummary()."
+msgstr ""
+"Crea una tabla de resumen descriptiva para un objeto de diseño de encuesta "
+"usando gtsummary::tbl_svysummary()."
 
 msgid "Select a survey.design object and the variables to include."
 msgstr "Seleccione un objeto survey.design y las variables a incluir."
@@ -274,7 +300,8 @@ msgid "Key Difference"
 msgstr "Diferencia clave"
 
 msgid "This dialog requires an object of class <code>survey.design</code>."
-msgstr "Este diálogo requiere un objeto de la clase <code>survey.design</code>."
+msgstr ""
+"Este diálogo requiere un objeto de la clase <code>survey.design</code>."
 
 msgid "Table of Survey Summary Statistics"
 msgstr "Tabla de Estadísticas de Resumen de Encuesta"
@@ -284,3 +311,108 @@ msgstr "Tabla de Resumen de Encuesta (gtsummary)"
 
 msgid "Optional: subset() condition (e.g., age > 18)"
 msgstr "Opcional: Condición subset() (ej., age > 18)"
+
+msgid "Survey object"
+msgstr "Objeto de encuesta"
+
+msgid "Dependent Variable (Y)"
+msgstr "Variable Dependiente (Y)"
+
+msgid "Independent Variables (X)"
+msgstr "Variables Independientes (X)"
+
+msgid "Model Family"
+msgstr "Familia del Modelo"
+
+msgid "Gaussian (Linear Regression)"
+msgstr "Gaussiana (Regresión Lineal)"
+
+msgid "Quasi-binomial (Logistic Reg. / Odds Ratios)"
+msgstr "Cuasi-binomial (Regresión Logística / Odds Ratios)"
+
+msgid "Quasi-poisson (Count Data)"
+msgstr "Cuasi-poisson (Datos de Conteo)"
+
+msgid "Exponentiate coefficients (e.g., for Odds Ratios)"
+msgstr "Exponenciar coeficientes (ej., para Odds Ratios)"
+
+msgid "Add model fit statistics at bottom (N, AIC, R² / Pseudo-R²)"
+msgstr "Agregar estadísticas de ajuste al final (N, AIC, R² / Pseudo-R²)"
+
+msgid "Add global p-values for categorical predictors (Wald tests)"
+msgstr "Agregar valores p globales para predictores categóricos (Pruebas Wald)"
+
+msgid "Save svyglm model object as:"
+msgstr "Guardar objeto del modelo svyglm como:"
+
+msgid "Save gtsummary table object as:"
+msgstr "Guardar objeto de tabla gtsummary como:"
+
+msgid "Model Configuration"
+msgstr "Configuración del Modelo"
+
+msgid "Table Options"
+msgstr "Opciones de la Tabla"
+
+msgid "Save Objects"
+msgstr "Guardar Objetos"
+
+msgid "Survey Regression Model (svyglm & tbl_regression)"
+msgstr "Modelo de Regresión para Encuestas (svyglm y tbl_regression)"
+
+msgid "Survey Regression Model (svyglm)"
+msgstr "Modelo de Regresión para Encuestas (svyglm)"
+
+msgid "Survey Regression Table (svyglm & tbl_regression)"
+msgstr "Tabla de Regresión para Encuestas (svyglm y tbl_regression)"
+
+msgid "Standard Data Frames"
+msgstr "Marcos de datos estándar (Data frames)"
+
+msgid "Data frame"
+msgstr "Marco de datos (Data frame)"
+
+msgid "Binomial (Logistic Regression / Odds Ratios)"
+msgstr "Binomial (Regresión Logística / Odds Ratios)"
+
+msgid "Poisson (Count Data)"
+msgstr "Poisson (Datos de Conteo)"
+
+msgid "Exponentiate coefficients (e.g., for Odds Ratios in Logistic)"
+msgstr "Exponenciar coeficientes (ej., para Odds Ratios en Logística)"
+
+msgid "Add model fit statistics at bottom (N, AIC, R²)"
+msgstr "Agregar estadísticas de ajuste al final (N, AIC, R²)"
+
+msgid "Add global p-values for categorical predictors (ANOVA)"
+msgstr "Agregar valores p globales para predictores categóricos (ANOVA)"
+
+msgid "Save glm model object as:"
+msgstr "Guardar objeto del modelo glm como:"
+
+msgid "Standard Regression Model (glm & tbl_regression)"
+msgstr "Modelo de Regresión Estándar (glm y tbl_regression)"
+
+msgid "Standard Regression Model (glm)"
+msgstr "Modelo de Regresión Estándar (glm)"
+
+msgid "Standard Regression Table (glm & tbl_regression)"
+msgstr "Tabla de Regresión Estándar (glm y tbl_regression)"
+
+msgid "Table for Existing Models (tbl_regression)"
+msgstr "Tabla para Modelos Existentes (tbl_regression)"
+
+msgid "Select Model from Workspace"
+msgstr "Seleccionar Modelo del Espacio de Trabajo"
+
+msgid "Exponentiate coefficients (e.g., for Odds Ratios or Hazard Ratios)"
+msgstr "Exponenciar coeficientes (ej., para Odds Ratios o Hazard Ratios)"
+
+msgid "Add global p-values for categorical predictors (Wald/ANOVA)"
+msgstr "Añadir valores-p globales para predictores categóricos (Wald/ANOVA)"
+
+msgid "Model Selection & Options"
+msgstr "Selección del Modelo y Opciones"
+
+msgid "Summary Table for Existing Model (tbl_regression)"
+msgstr "Tabla Resumen para Modelo Existente (tbl_regression)"

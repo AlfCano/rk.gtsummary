@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: rk.gtsummary 0.1.4\n"
+"Project-Id-Version: rk.gtsummary 0.2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-26 20:00+0000\n"
-"PO-Revision-Date: 2026-02-26 20:00+0100\n"
+"PO-Revision-Date: 2026-11-09 12:31-0600\n"
 "Last-Translator: \n"
 "Language-Team: German <rkward-devel@kde.org>\n"
 "Language: de\n"
@@ -11,6 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 3.4.2\n"
 
 msgid "Summary Table (gtsummary)"
 msgstr "Zusammenfassungstabelle (gtsummary)"
@@ -252,8 +253,12 @@ msgstr "Verwenden Sie die Reiter, um Statistiken, Formatierung und Themen anzupa
 msgid "Table of Summary Statistics"
 msgstr "Tabelle der zusammenfassenden Statistiken"
 
+#, fuzzy
 msgid "Survey design objects"
-msgstr "Survey-Design-Objekte"
+msgstr "#-#-#-#-#  catalog.po (rk.gtsummary 0.2.0)  #-#-#-#-#\n"
+"Survey-Design-Objekte\n"
+"#-#-#-#-#  catalog.po (rk.gtsummary 0.2.0)  #-#-#-#-#\n"
+"Umfragedesign-Objekte"
 
 msgid "Survey object to summarize"
 msgstr "Survey-Objekt zusammenfassen"
@@ -284,3 +289,110 @@ msgstr "Survey-Zusammenfassungstabelle (gtsummary)"
 
 msgid "Optional: subset() condition (e.g., age > 18)"
 msgstr "Optional: subset() Bedingung (z.B. age > 18)"
+
+msgid "Survey object"
+msgstr "Umfrageobjekt"
+
+msgid "Dependent Variable (Y)"
+msgstr "Abhängige Variable (Y)"
+
+msgid "Independent Variables (X)"
+msgstr "Unabhängige Variablen (X)"
+
+msgid "Model Family"
+msgstr "Modellfamilie"
+
+msgid "Gaussian (Linear Regression)"
+msgstr "Gaußsch (Lineare Regression)"
+
+msgid "Quasi-binomial (Logistic Reg. / Odds Ratios)"
+msgstr "Quasi-binomial (Logistische Reg. / Odds Ratios)"
+
+msgid "Quasi-poisson (Count Data)"
+msgstr "Quasi-Poisson (Zähldaten)"
+
+msgid "Exponentiate coefficients (e.g., for Odds Ratios)"
+msgstr "Koeffizienten exponentieren (z. B. für Odds Ratios)"
+
+msgid "Add model fit statistics at bottom (N, AIC, R² / Pseudo-R²)"
+msgstr "Modellanpassungsstatistiken unten hinzufügen (N, AIC, R² / Pseudo-R²)"
+
+msgid "Add global p-values for categorical predictors (Wald tests)"
+msgstr "Globale p-Werte für kategoriale Prädiktoren hinzufügen (Wald-Tests)"
+
+msgid "Save svyglm model object as:"
+msgstr "svyglm - Modellobjekt speichern als:"
+
+msgid "Save gtsummary table object as:"
+msgstr "gtsummary - Tabellenobjekt speichern als:"
+
+msgid "Model Configuration"
+msgstr "Modellkonfiguration"
+
+msgid "Table Options"
+msgstr "Tabellenoptionen"
+
+msgid "Save Objects"
+msgstr "Objekte speichern"
+
+msgid "Survey Regression Model (svyglm & tbl_regression)"
+msgstr "Umfrage-Regressionsmodell (svyglm & tbl_regression)"
+
+msgid "Survey Regression Model (svyglm)"
+msgstr "Umfrage-Regressionsmodell (svyglm)"
+
+msgid "Survey Regression Table (svyglm & tbl_regression)"
+msgstr "Umfrage-Regressionstabelle (svyglm & tbl_regression)"
+
+msgid "Standard Data Frames"
+msgstr "Standard-Datenrahmen (Data frames)"
+
+msgid "Data frame"
+msgstr "Datenrahmen (Data frame)"
+
+msgid "Binomial (Logistic Regression / Odds Ratios)"
+msgstr "Binomial (Logistische Regression / Odds Ratios)"
+
+msgid "Poisson (Count Data)"
+msgstr "Poisson (Zähldaten)"
+
+msgid "Exponentiate coefficients (e.g., for Odds Ratios in Logistic)"
+msgstr "Koeffizienten exponentieren (z. B. für Odds Ratios in Logistik)"
+
+#, fuzzy
+msgid "Add model fit statistics at bottom (N, AIC, R²)"
+msgstr "Modellanpassungsstatistiken unten hinzufügen (N, AIC, R²)"
+
+msgid "Add global p-values for categorical predictors (ANOVA)"
+msgstr "Globale p-Werte für kategoriale Prädiktoren hinzufügen (ANOVA)"
+
+msgid "Save glm model object as:"
+msgstr "glm - Modellobjekt speichern als:"
+
+msgid "Standard Regression Model (glm & tbl_regression)"
+msgstr "Standard-Regressionsmodell (glm & tbl_regression)"
+
+msgid "Standard Regression Model (glm)"
+msgstr "Standard-Regressionsmodell (glm)"
+
+msgid "Standard Regression Table (glm & tbl_regression)"
+msgstr "Standard-Regressionstabelle (glm & tbl_regression)"
+
+msgid "Table for Existing Models (tbl_regression)"
+msgstr "Tabelle für bestehende Modelle (tbl_regression)"
+
+msgid "Select Model from Workspace"
+msgstr "Modell aus dem Workspace auswählen"
+
+msgid "Exponentiate coefficients (e.g., for Odds Ratios or Hazard Ratios)"
+msgstr "Koeffizienten potenzieren (z. B. für Odds Ratios oder Hazard Ratios)"
+
+msgid "Add global p-values for categorical predictors (Wald/ANOVA)"
+msgstr "Globale p-Werte für kategoriale Prädiktoren hinzufügen (Wald/ANOVA)"
+
+msgid "Model Selection & Options"
+msgstr "Modellauswahl & Optionen"
+
+msgid "Summary Table for Existing Model (tbl_regression)"
+msgstr "Zusammenfassende Tabelle für bestehendes Modell (tbl_regression)"
+

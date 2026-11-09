@@ -1,0 +1,70 @@
+<!DOCTYPE rkhelp >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<summary>
+	</summary>
+	<usage>
+	</usage>
+	<!--
+		<section id="sct_EDITORDE" title="EDIT OR DELETE ME">
+			EDIT OR DELETE ME
+		</section>
+	-->
+	<settings>
+		<caption id="tab_MdlCnfgr" />
+		<setting id="var_glm_data">
+		</setting>
+		<setting id="var_glm_dep">
+		</setting>
+		<setting id="var_glm_indep">
+		</setting>
+		<setting id="drp_glm_family">
+		</setting>
+		<caption id="tab_TblOptns" />
+		<setting id="cbox_glm_exp">
+		</setting>
+		<setting id="cbox_glm_glance">
+		</setting>
+		<setting id="cbox_glm_global_p">
+		</setting>
+		<caption id="tab_ThmsFrmt" />
+		<caption id="frm_Appearnc" />
+		<setting id="drp_journal">
+		</setting>
+		<setting id="cbox_compact">
+		</setting>
+		<caption id="frm_DsplyOpt" />
+		<setting id="drp_printer">
+		</setting>
+		<caption id="frm_LnggLclz" />
+		<setting id="drp_lang">
+		</setting>
+		<setting id="inp_dec_mark">
+		</setting>
+		<setting id="inp_big_mark">
+		</setting>
+		<caption id="tab_Output" />
+		<caption id="frm_OtptFrmt" />
+		<setting id="drp_save_conversion">
+		</setting>
+		<caption id="frm_SvObjcts" />
+		<setting id="sav_glm_model">
+		</setting>
+		<setting id="sav_glm_table">
+		</setting>
+	</settings>
+	<!--
+		<related>
+			<ul>
+				<li>
+					<link href="rkward://rhelp/..." />
+				</li>
+			</ul>
+		</related>
+	-->
+	<technical>
+	</technical>
+</document>

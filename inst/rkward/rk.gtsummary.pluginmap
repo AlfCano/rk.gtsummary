@@ -20,8 +20,8 @@
 		name="rk.gtsummary"
 		shortinfo="An RKWard plugin to generate summary tables using the 'gtsummary' package, supporting both standard data.frames (tbl_summary) and survey design objects (tbl_svysummary)."
 		longinfo="An RKWard plugin to generate summary tables using the 'gtsummary' package, supporting both standard data.frames (tbl_summary) and survey design objects (tbl_svysummary)."
-		version="0.1.4"
-		releasedate="2026-07-25"
+		version="0.2.0"
+		releasedate="2026-11-09"
 		url="https://github.com/rkward-community"
 		license="GPL (&gt;= 3)"
 	>
@@ -47,6 +47,27 @@
 		>
 		</component>
 		<component
+			id="cmp_SmmryTblgtsmmrySrvyRgrssM"
+			label="Survey Regression Model (svyglm)"
+			type="standard"
+			file="plugins/SurveyRegressionModelsvyglm.xml"
+		>
+		</component>
+		<component
+			id="cmp_SmmryTblgtsmmryStndrdRgrM"
+			label="Standard Regression Model (glm)"
+			type="standard"
+			file="plugins/StandardRegressionModelglm.xml"
+		>
+		</component>
+		<component
+			id="cmp_SmmryTblgtsmmryTblfrExstM"
+			label="Table for Existing Models (tbl_regression)"
+			type="standard"
+			file="plugins/TableforExistingModelstbl_regression.xml"
+		>
+		</component>
+		<component
 			id="cmp_SmmryTblgtsmmrySmmryTblgt"
 			label="Summary Table (gtsummary)"
 			type="standard"
@@ -65,6 +86,45 @@
 			>
 				<entry
 					component="cmp_SmmryTblgtsmmrySrvySmmryT"
+				/>
+			</menu>
+		</menu>
+		<menu
+			id="analysis"
+			label="Analysis"
+		>
+			<menu
+				id="gtSummaries"
+				label="gt Summaries"
+			>
+				<entry
+					component="cmp_SmmryTblgtsmmrySrvyRgrssM"
+				/>
+			</menu>
+		</menu>
+		<menu
+			id="analysis"
+			label="Analysis"
+		>
+			<menu
+				id="gtSummaries"
+				label="gt Summaries"
+			>
+				<entry
+					component="cmp_SmmryTblgtsmmryStndrdRgrM"
+				/>
+			</menu>
+		</menu>
+		<menu
+			id="analysis"
+			label="Analysis"
+		>
+			<menu
+				id="gtSummaries"
+				label="gt Summaries"
+			>
+				<entry
+					component="cmp_SmmryTblgtsmmryTblfrExstM"
 				/>
 			</menu>
 		</menu>

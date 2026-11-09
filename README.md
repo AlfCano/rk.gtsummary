@@ -1,13 +1,25 @@
-# rk.gtsummary: Publication-Ready Summary Tables
+# rk.gtsummary: Publication-Ready Summary & Regression Tables for RKWard
 
-![Version](https://img.shields.io/badge/Version-0.1.4-blue.svg)
-![License](https://img.shields.io/badge/License-GPLv3-blue.svg)
+![Version](https://img.shields.io/badge/Version-0.2.0-blue.svg)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 ![RKWard](https://img.shields.io/badge/Platform-RKWard-green)
 [![R Linter](https://github.com/AlfCano/rk.gtsummary/actions/workflows/lintr.yml/badge.svg)](https://github.com/AlfCano/rk.gtsummary/actions/workflows/lintr.yml)
+![AI Gemini](https://img.shields.io/badge/AI-Gemini-4285F4?logo=googlegemini&logoColor=white)
 
-An RKWard plugin for creating beautiful, publication-ready summary tables using the powerful `{gtsummary}` package.
+**A Zero-Code GUI Wrapper for the `gtsummary` Package: From Descriptive Stats to Advanced Regression Modeling**
 
-This plugin provides a user-friendly graphical interface for the `tbl_summary` and `tbl_svysummary` functions, allowing for easy generation of descriptive statistics tables for both standard data frames and complex survey designs.
+`rk.gtsummary` empowers researchers to generate beautiful, highly customizable, and publication-ready tables directly from the RKWard GUI. Whether you are summarizing simple data frames or running predictive regression models on complex, weighted survey designs (like IPUMS or demographic censuses), this plugin handles the heavy lifting, formatting, and statistical extraction automatically.
+
+---
+
+## 🚀 What's New in Version 0.2.0 (The Regression Update)
+
+*   **Full Regression Suite (`tbl_regression`):** The plugin now goes beyond descriptive statistics by introducing two powerful new modules for predictive modeling: **Standard Regression (`glm`)** and **Survey Regression (`svyglm`)**.
+*   **The Survey $R^2$ Solution:** Fitting models to weighted survey data in base R usually strips away the $R^2$ metric in the summary output. This plugin elegantly solves this notorious pain point by integrating `add_glance_table()`, automatically calculating and appending the pseudo-$R^2$, AIC, and unweighted N to the bottom of your complex survey models.
+*   **One-Click Odds Ratios:** Easily fit Logistic Regression models (Binomial or Quasi-binomial) and simply check a box to exponentiate your coefficients into Odds Ratios automatically.
+*   **Global P-Values:** Automatically compute and display global p-values for categorical predictors (using Wald tests for surveys and ANOVA for standard data) with a single click.
+*   **Unified Output Formats:** Just like the summary tables, your regression outputs can be converted instantly to `gt` (HTML/PDF), `flextable` (Word), or `huxtable` (LaTeX) to match your exact publication needs.
+
 
 ## 🚀 What's New in Version 0.1.4
 
@@ -54,6 +66,17 @@ This plugin provides a user-friendly graphical interface for the `tbl_summary` a
     -   Easily configure language and localization settings (e.g., decimal marks).
 -   **Workspace Management**: Option to strip raw data from output objects to keep your `.RData` files small and manageable.
 
+---
+
+## ⚙️ Prerequisites
+
+You must have [RKWard](https://rkward.kde.org/) installed along with the following R packages. The plugin will automatically attempt to load them when required:
+
+```R
+install.packages(c("gtsummary", "survey"))
+
+```
+
 ## Installation
 
 This plugin is not yet on CRAN. To install it, you need the `{remotes}` (or `{devtools}`) package.
@@ -74,16 +97,35 @@ This plugin is not yet on CRAN. To install it, you need the `{remotes}` (or `{de
 3.  **Activate the Plugin**:
     Restart RKWard to load the new menu items and translations.
 
-## Usage
+---
 
-Once installed, the plugin will be available in the RKWard menu under:
+## 🛠️ Usage Workflow
 
-**`Analysis` -> `gt Summaries`**
+This plugin adds a comprehensive suite of 4 analytical tools under the **Analysis > gt Summaries** menu in RKWard:
 
-You will see two options:
+### 1. Summary Table (tbl_summary)
+*For standard Data Frames.*
+*   Select your dataset and variables.
+*   Apply outer/inner stratification (`tbl_strata`) to create grouped summary tables.
+*   Customize statistics formats, missing values, and variable labels on the fly.
 
--   **Summary Table (gtsummary)**: Use this for standard `data.frame` objects.
--   **Survey Summary Table (gtsummary)**: Use this for `survey.design` objects.
+### 2. Survey Summary Table (tbl_svysummary)
+*   For weighted survey design objects.*
+*   Maintains the exact same clean interface as the standard table, but mathematically handles complex sampling weights and primary sampling units (PSUs) in the background.
+
+### 3. Standard Regression Model (glm)
+*Build predictive models from standard Data Frames.*
+*   Select your Target (Y) and Predictors (X).
+*   Choose your model family: Gaussian (Linear), Binomial (Logistic), or Poisson.
+*   Extract regression coefficients, 95% Confidence Intervals, P-values, and model fit statistics ($R^2$, AIC).
+
+### 4. Survey Regression Model (svyglm)
+*Build predictive models from weighted survey designs.*
+*   Automatically protects your weighted structures while fitting regression models.
+*   Choose between Gaussian, Quasi-binomial, and Quasi-poisson families.
+*   Seamlessly extracts the much-needed pseudo-$R^2$ for your social science or demographic research.
+
+---
 
 **Workflow:**
 1.  **Data Tab:** Select your dataset and variables.
@@ -91,7 +133,7 @@ You will see two options:
 3.  **Themes Tab:** Apply journal themes or languages.
 4.  **Output Tab:** Choose whether to convert the object (e.g., to `flextable` for Word export) and save it to your workspace.
 
-## Dependencies
+## Suggestion
 
 This plugin requires the following R packages to be installed:
 -   `gtsummary`
@@ -102,13 +144,13 @@ This plugin requires the following R packages to be installed:
 -   `flextable`
 -   `huxtable`
 
-## Author
+---
 
-Alfonso Cano
-<alfonso.cano@correo.buap.mx>
+## 📝 License and Author
 
-*Code generation and iterative debugging assisted by Gemini, a large language model from Google.*
+**Author:** Alfonso Cano ([@AlfCano](https://github.com/AlfCano))  
+**Email:** alfonso.cano@correo.buap.mx  
+*   **Assisted by:** Gemini, a large language model from Google.
+*   **License:** GPL (>= 3)
 
-## License
-
-GPL (>= 3)
+This project is licensed under the **GPL (>= 3)** License.

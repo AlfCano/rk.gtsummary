@@ -1,0 +1,110 @@
+<!DOCTYPE rkplugin >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<code file="SurveyRegressionModelsvyglm.js" />
+	<help file="SurveyRegressionModelsvyglm.rkh" />
+	<!--
+		<dependencies>
+		</dependencies>
+	-->
+	<logic>
+		<script>
+			gui.addChangeCommand("var_reg_svy_data.available", "update_root_reg_svy()");
+	    function update_root_reg_svy() {
+	       var obj = gui.getValue("var_reg_svy_data.available");
+	       if (obj !== "") {
+	          gui.setValue("slc_reg_svy.root", obj + "$variables");
+	       } else {
+	          gui.setValue("slc_reg_svy.root", "");
+	       }
+	    }
+		</script>
+	</logic>
+	<dialog label="Survey Regression Model (svyglm &amp; tbl_regression)">
+		<row id="row_cSSMCMCSDV">
+			<column id="clm_vrslctrdsS">
+				<varselector id="slc_reg_svy" label="Survey design objects" />
+			</column>
+			<column id="clm_tMCMCSDVYI">
+				<tabbook>
+					<tab label="Model Configuration" id="tab_MdlCnfgr">
+						<column id="clm_vSDVYIVXMF">
+							<varslot id="var_reg_svy_data" label="Survey object" source="slc_reg_svy" required="true" />
+							<varslot id="var_reg_dep" label="Dependent Variable (Y)" source="slc_reg_svy" required="true" />
+							<varslot id="var_reg_indep" label="Independent Variables (X)" source="slc_reg_svy" required="true" multi="true" />
+							<dropdown id="drp_reg_family" label="Model Family">
+								<option label="Gaussian (Linear Regression)" value="gaussian()" checked="true" />
+								<option label="Quasi-binomial (Logistic Reg. / Odds Ratios)" value="quasibinomial()" />
+								<option label="Quasi-poisson (Count Data)" value="quasipoisson()" />
+							</dropdown>
+							<stretch />
+						</column>
+					</tab>
+					<tab label="Table Options" id="tab_TblOptns">
+						<column id="clm_cEORTRUEAN">
+							<checkbox id="cbox_reg_exp" label="Exponentiate coefficients (e.g., for Odds Ratios)" value="TRUE" />
+							<checkbox id="cbox_reg_glance" label="Add model fit statistics at bottom (N, AIC, R² / Pseudo-R²)" value="TRUE" checked="true" />
+							<checkbox id="cbox_reg_global_p" label="Add global p-values for categorical predictors (Wald tests)" value="TRUE" />
+							<stretch />
+						</column>
+					</tab>
+					<tab label="Themes &amp; Formatting" id="tab_ThmsFrmt">
+						<column id="clm_fAAJTNJAMA">
+							<frame label="Appearance" id="frm_Appearnc">
+								<dropdown id="drp_journal" label="Journal Theme">
+									<option label="None" value="none" checked="true" />
+									<option label="JAMA" value="jama" />
+									<option label="Lancet" value="lancet" />
+									<option label="NEJM" value="nejm" />
+									<option label="QJ Econ" value="qjecon" />
+								</dropdown>
+								<checkbox id="cbox_compact" label="Use compact theme" value="1" />
+							</frame>
+							<frame label="Display Options" id="frm_DsplyOpt">
+								<dropdown id="drp_printer" label="Printer Friendly Engine (Preview)">
+									<option label="None" value="none" checked="true" />
+									<option label="gt" value="gt" />
+									<option label="kable" value="kable" />
+									<option label="flextable" value="flextable" />
+									<option label="huxtable" value="huxtable" />
+								</dropdown>
+							</frame>
+							<frame label="Language &amp; Localization" id="frm_LnggLclz">
+								<dropdown id="drp_lang" label="Language">
+									<option label="System Default (en)" value="en" checked="true" />
+									<option label="German (de)" value="de" />
+									<option label="Spanish (es)" value="es" />
+									<option label="French (fr)" value="fr" />
+									<option label="Portuguese (pt)" value="pt" />
+									<option label="Chinese (zh-cn)" value="zh-cn" />
+								</dropdown>
+								<input label="Decimal mark" id="inp_dec_mark" />
+								<input label="Big number mark" id="inp_big_mark" />
+							</frame>
+						</column>
+					</tab>
+					<tab label="Output" id="tab_Output">
+						<column id="clm_fOFOFCRNHT">
+							<frame label="Output Format" id="frm_OtptFrmt">
+								<dropdown id="drp_save_conversion" label="Convert object format (Reduces file size)">
+									<option label="No conversion (gtsummary object)" value="none" checked="true" />
+									<option label="gt object (HTML/PDF)" value="gt" />
+									<option label="flextable (Word)" value="flextable" />
+									<option label="huxtable (LaTeX/RTF)" value="huxtable" />
+								</dropdown>
+							</frame>
+							<frame label="Save Objects" id="frm_SvObjcts">
+								<saveobject label="Save svyglm model object as:" checkable="true" checked="true" initial="svy_model" id="sav_reg_model" />
+								<saveobject label="Save gtsummary table object as:" checkable="true" checked="true" initial="svy_reg_table" id="sav_reg_table" />
+							</frame>
+							<stretch />
+						</column>
+					</tab>
+				</tabbook>
+			</column>
+		</row>
+	</dialog>
+</document>

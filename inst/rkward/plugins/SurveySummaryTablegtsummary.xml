@@ -11,12 +11,17 @@
 		</dependencies>
 	-->
 	<logic>
-		<!--
-			<convert id="!edit!" sources="!edit!" mode="equals" standard="!edit!" />
-		-->
-		<!--
-			<connect governor="!edit!.state" client="!edit!.enabled" />
-		-->
+		<script>
+			gui.addChangeCommand("var_svy_data.available", "update_root_svy()");
+	    function update_root_svy() {
+	       var obj = gui.getValue("var_svy_data.available");
+	       if (obj !== "") {
+	          gui.setValue("slc_svy_source.root", obj + "$variables");
+	       } else {
+	          gui.setValue("slc_svy_source.root", "");
+	       }
+	    }
+		</script>
 	</logic>
 	<dialog label="Survey Summary Table (tbl_svysummary)">
 		<row id="row_cSSDDSO18V">
