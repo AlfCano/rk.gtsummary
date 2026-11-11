@@ -5,7 +5,7 @@ local({
 
   # --- GLOBAL SETTINGS ---
   plugin_name <- "rk.gtsummary"
-  plugin_version <- "0.2.0"
+  plugin_version <- "0.2.1"
 
   # =========================================================================================
   # PACKAGE DEFINITION (GLOBAL METADATA)
@@ -197,8 +197,13 @@ local({
     label = "Summary Table (tbl_summary)",
     child = rk.XML.row(
       rk.XML.col(tbl_summary_df_selector),
-      rk.XML.col(tbl_summary_tabbook) # Removed Save Object from here, it's inside Tab 5
+      rk.XML.col(tbl_summary_tabbook)
     )
+  )
+
+  # ---> NUEVO: Lógica Auto-Focus para Dataframe Estándar <---
+  tbl_summary_logic <- rk.XML.logic(
+    rk.XML.connect(governor = tbl_summary_data_slot, get = "available", client = tbl_summary_df_selector, set = "root")
   )
 
   tbl_summary_help <- rk.rkh.doc(
@@ -363,9 +368,24 @@ local({
     label = "Survey Summary Table (tbl_svysummary)",
     child = rk.XML.row(
       rk.XML.col(svy_selector),
-      rk.XML.col(svy_tabbook) # Removed Save Object from here, it's inside Tab 5
+      rk.XML.col(svy_tabbook)
     )
   )
+
+  # ---> NUEVO: Lógica Auto-Focus para Objetos Complejos (Survey) <---
+  svy_gui_script <- XiMpLe::XMLNode("script", '
+    gui.addChangeCommand("var_svy_data.available", "update_root_svy()");
+    function update_root_svy() {
+       var obj = gui.getValue("var_svy_data.available");
+       if (obj !== "") {
+          gui.setValue("slc_svy_source.root", obj + "$variables");
+       } else {
+          gui.setValue("slc_svy_source.root", "");
+       }
+    }
+  ')
+
+  svy_logic <- rk.XML.logic(svy_gui_script)
 
   svy_help <- rk.rkh.doc(
     summary = rk.rkh.summary("Creates a descriptive summary table for a survey design object using gtsummary::tbl_svysummary()."),
@@ -492,11 +512,10 @@ local({
     }
 '
 
-  svy_summary_component <- rk.plugin.component(
-    "Survey Summary Table (gtsummary)", xml = list(dialog = svy_dialog),
-    js = list(
-      require = c("gtsummary", "survey"), calculate = js_svy_logic, printout = js_svy_printout
-    ),
+   svy_summary_component <- rk.plugin.component(
+    "Survey Summary Table (gtsummary)",
+    xml = list(dialog = svy_dialog, logic = svy_logic),
+    js = list(require = c("gtsummary", "survey"), calculate = js_svy_logic, printout = js_svy_printout),
     rkh = list(help = svy_help), hierarchy = list("analysis", "gt Summaries")
   )
 
@@ -526,14 +545,20 @@ local({
   reg_save_model <- rk.XML.saveobj(id.name = "sav_reg_model", label = "Save svyglm model object as:", chk = TRUE, initial = "svy_model")
   reg_save_table <- rk.XML.saveobj(id.name = "sav_reg_table", label = "Save gtsummary table object as:", chk = TRUE, initial = "svy_reg_table")
 
+  # ---> NUEVO: Controles para Split Analysis <---
+  reg_split_cbox <- rk.XML.cbox(id.name = "cbox_reg_split", label = "Run model by groups (Split Analysis / Stratify)", value = "1", chk = FALSE)
+  reg_split_var <- rk.XML.varslot(id.name = "var_reg_strata", label = "Stratification Variable", source = "slc_reg_svy")
+  attr(reg_split_var, "source_property") <- "variables"
+  reg_split_frame <- rk.XML.frame(reg_split_var, id.name = "frm_reg_split")
+
   reg_tabbook <- rk.XML.tabbook(tabs = list(
     "Model Configuration" = rk.XML.col(
-      reg_svy_data, reg_dep, reg_indep, reg_family, rk.XML.stretch()
+      reg_svy_data, reg_dep, reg_indep, reg_family, reg_split_cbox, reg_split_frame, rk.XML.stretch()
     ),
     "Table Options" = rk.XML.col(
       reg_exp, reg_glance, reg_global_p, rk.XML.stretch()
     ),
-    "Themes & Formatting" = themes_tab_content, # ¡Reutilizamos la pestaña de temas del script principal!
+    "Themes & Formatting" = themes_tab_content,
     "Output" = rk.XML.col(
       rk.XML.frame(save_conversion_dropdown, label="Output Format"),
       rk.XML.frame(reg_save_model, reg_save_table, label="Save Objects"),
@@ -546,9 +571,26 @@ local({
     child = rk.XML.row(rk.XML.col(reg_svy_selector), rk.XML.col(reg_tabbook))
   )
 
+  reg_svy_gui_script <- XiMpLe::XMLNode("script", '
+    gui.addChangeCommand("var_reg_svy_data.available", "update_root_reg_svy()");
+    function update_root_reg_svy() {
+       var obj = gui.getValue("var_reg_svy_data.available");
+       if (obj !== "") {
+          gui.setValue("slc_reg_svy.root", obj + "$variables");
+       } else {
+          gui.setValue("slc_reg_svy.root", "");
+       }
+    }
+  ')
+
+  # ---> INYECCIÓN: Lógica combinada (Auto-focus + Split) <---
+  reg_svy_logic <- rk.XML.logic(
+    reg_svy_gui_script,
+    rk.XML.connect(governor = reg_split_cbox, get = "state", client = reg_split_frame, set = "visible")
+  )
+
   js_reg_logic <- '
     var svy_object = getValue("var_reg_svy_data");
-    // Obtenemos los nombres puros de las variables
     var dep_raw = getValue("var_reg_dep").split("\\n").filter(function(n){ return n != "" })[0];
     var indeps_raw = getValue("var_reg_indep").split("\\n").filter(function(n){ return n != "" });
     var family = getValue("drp_reg_family");
@@ -570,35 +612,47 @@ local({
 
     var dep = getColumnName(dep_raw);
     var indep_names = indeps_raw.map(function(item) { return getColumnName(item); });
-
-    // Construimos la fórmula Y ~ X1 + X2
     var formula = "`" + dep + "` ~ `" + indep_names.join("` + `") + "`";
 
     echo("require(survey)\\nrequire(gtsummary)\\n\\n");
-    echo("# 1. Fit the survey-weighted regression model\\n");
-    echo("svy_model <- survey::svyglm(formula = " + formula + ", design = " + svy_object + ", family = " + family + ")\\n\\n");
 
-    // Lógica de Temas compartida
     var journal = getValue("drp_journal");
     var compact = getValue("cbox_compact");
     var printer = getValue("drp_printer");
     var convert_save = getValue("drp_save_conversion");
+    var lang = getValue("drp_lang");
+    var dec_mark = getValue("inp_dec_mark");
+    var big_mark = getValue("inp_big_mark");
 
     if(journal && journal != "none") { echo("gtsummary::theme_gtsummary_journal(journal = \\"" + journal + "\\");\\n"); }
     if(compact == "1") { echo("gtsummary::theme_gtsummary_compact();\\n"); }
     if(printer && printer != "none") { echo("gtsummary::theme_gtsummary_printer(print_engine = \\"" + printer + "\\");\\n"); }
 
-    echo("# 2. Create the gtsummary regression table\\n");
+    var lang_opts = new Array();
+    if(lang) { lang_opts.push("language = \\"" + lang + "\\""); }
+    if(dec_mark) { lang_opts.push("decimal.mark = \\"" + dec_mark + "\\""); }
+    if(big_mark) { lang_opts.push("big.mark = \\"" + big_mark + "\\""); }
+    if(lang_opts.length > 0) { echo("gtsummary::theme_gtsummary_language(" + lang_opts.join(", ") + ");\\n"); }
+
     var exp_arg = getValue("cbox_reg_exp") == "TRUE" ? "exponentiate = TRUE" : "exponentiate = FALSE";
-    echo("svy_reg_table <- gtsummary::tbl_regression(svy_model, " + exp_arg + ")");
 
+    // ---> INYECCIÓN: Construir pipeline de tbl_regression como variable JS <---
+    var reg_pipeline = "gtsummary::tbl_regression(" + exp_arg + ")";
     if(getValue("cbox_reg_global_p") == "TRUE"){
-        echo(" %>%\\n  gtsummary::add_global_p()");
+        reg_pipeline += " %>%\\n      gtsummary::add_global_p()";
     }
-
-    // MAGIA DE ESTADÍSTICAS DEL MODELO (R2, N, AIC)
     if(getValue("cbox_reg_glance") == "TRUE"){
-        echo(" %>%\\n  gtsummary::add_glance_table()");
+        reg_pipeline += " %>%\\n      gtsummary::add_glance_table(\\n";
+        reg_pipeline += "        glance_fun = function(x) {\\n";
+        reg_pipeline += "          gl <- broom::glance(x)\\n";
+        reg_pipeline += "          if(x$family$family == \\\"gaussian\\\") {\\n";
+        reg_pipeline += "            gl$r.squared <- 1 - (x$deviance / x$null.deviance)\\n";
+        reg_pipeline += "          } else if (x$family$family %in% c(\\\"binomial\\\", \\\"quasibinomial\\\")) {\\n";
+        reg_pipeline += "            try(gl$pseudo.r.squared <- survey::psrsq(x), silent = TRUE)\\n";
+        reg_pipeline += "          }\\n";
+        reg_pipeline += "          gl\\n";
+        reg_pipeline += "        }\\n";
+        reg_pipeline += "      )";
     }
 
     var conversion_suffix = "";
@@ -606,7 +660,24 @@ local({
     if(convert_save == "flextable") conversion_suffix = " %>%\\n  gtsummary::as_flex_table()";
     if(convert_save == "huxtable") conversion_suffix = " %>%\\n  gtsummary::as_hux_table()";
 
-    echo(conversion_suffix + "\\n\\n");
+    var is_split = getValue("cbox_reg_split") == "1";
+    var split_var_raw = getValue("var_reg_strata");
+
+    if (is_split && split_var_raw != "") {
+        var split_var = getColumnName(split_var_raw);
+        echo("# 1. Fit survey models by group and create stratified table\\n");
+        echo("svy_reg_table <- " + svy_object + " %>%\\n");
+        echo("  gtsummary::tbl_strata(\\n");
+        echo("    strata = " + split_var + ",\\n");
+        echo("    .tbl_fun = ~ .x %>% survey::svyglm(formula = " + formula + ", design = ., family = " + family + ") %>%\\n");
+        echo("      " + reg_pipeline + "\\n");
+        echo("  )" + conversion_suffix + "\\n\\n");
+    } else {
+        echo("# 1. Fit the survey-weighted regression model\\n");
+        echo("svy_model <- survey::svyglm(formula = " + formula + ", design = " + svy_object + ", family = " + family + ")\\n\\n");
+        echo("# 2. Create the gtsummary regression table\\n");
+        echo("svy_reg_table <- svy_model %>%\\n  " + reg_pipeline + conversion_suffix + "\\n\\n");
+    }
   '
 
   js_reg_printout <- '
@@ -616,7 +687,7 @@ local({
     if(getValue("sav_reg_model.active") || getValue("sav_reg_table.active")) {
        echo("rk.print(\\"<hr>\\")\\n");
     }
-    if(getValue("sav_reg_model.active")){
+    if(getValue("sav_reg_model.active") && getValue("cbox_reg_split") != "1"){
       echo("rk.print(paste0(\\"<b>svyglm model saved as: </b><code>\\", \\"" + getValue("sav_reg_model") + "\\", \\"</code><br>\\"))\\n");
     }
     if(getValue("sav_reg_table.active")){
@@ -625,12 +696,12 @@ local({
   '
 
   reg_svy_component <- rk.plugin.component(
-    "Survey Regression Model (svyglm)", xml = list(dialog = reg_dialog),
-    js = list(
-      require = c("gtsummary", "survey"), calculate = js_reg_logic, printout = js_reg_printout
-    ),
+    "Survey Regression Model (svyglm)",
+    xml = list(dialog = reg_dialog, logic = reg_svy_logic),
+    js = list(require = c("gtsummary", "survey"), calculate = js_reg_logic, printout = js_reg_printout),
     hierarchy = list("analysis", "gt Summaries")
   )
+
 
   # =========================================================================================
   # COMPONENT 4 DEFINITION: tbl_regression (for standard glm / lm)
@@ -654,14 +725,19 @@ local({
   glm_save_model <- rk.XML.saveobj(id.name = "sav_glm_model", label = "Save glm model object as:", chk = TRUE, initial = "std_model")
   glm_save_table <- rk.XML.saveobj(id.name = "sav_glm_table", label = "Save gtsummary table object as:", chk = TRUE, initial = "std_reg_table")
 
+  # ---> NUEVO: Controles para Split Analysis <---
+  glm_split_cbox <- rk.XML.cbox(id.name = "cbox_glm_split", label = "Run model by groups (Split Analysis / Stratify)", value = "1", chk = FALSE)
+  glm_split_var <- rk.XML.varslot(id.name = "var_glm_strata", label = "Stratification Variable", source = "slc_glm")
+  glm_split_frame <- rk.XML.frame(glm_split_var, id.name = "frm_glm_split")
+
   glm_tabbook <- rk.XML.tabbook(tabs = list(
     "Model Configuration" = rk.XML.col(
-      glm_data, glm_dep, glm_indep, glm_family, rk.XML.stretch()
+      glm_data, glm_dep, glm_indep, glm_family, glm_split_cbox, glm_split_frame, rk.XML.stretch()
     ),
     "Table Options" = rk.XML.col(
       glm_exp, glm_glance, glm_global_p, rk.XML.stretch()
     ),
-    "Themes & Formatting" = themes_tab_content, # Reutiliza la misma pestaña
+    "Themes & Formatting" = themes_tab_content,
     "Output" = rk.XML.col(
       rk.XML.frame(save_conversion_dropdown, label="Output Format"),
       rk.XML.frame(glm_save_model, glm_save_table, label="Save Objects"),
@@ -672,6 +748,12 @@ local({
   glm_dialog <- rk.XML.dialog(
     label = "Standard Regression Model (glm & tbl_regression)",
     child = rk.XML.row(rk.XML.col(glm_selector), rk.XML.col(glm_tabbook))
+  )
+
+  # ---> INYECCIÓN: Lógica combinada (Auto-focus + Split) <---
+  glm_logic <- rk.XML.logic(
+    rk.XML.connect(governor = glm_data, get = "available", client = glm_selector, set = "root"),
+    rk.XML.connect(governor = glm_split_cbox, get = "state", client = glm_split_frame, set = "visible")
   )
 
   js_glm_logic <- '
@@ -700,25 +782,166 @@ local({
     var formula = "`" + dep + "` ~ `" + indep_names.join("` + `") + "`";
 
     echo("require(gtsummary)\\n\\n");
-    echo("# 1. Fit the standard regression model\\n");
-    echo("std_model <- glm(formula = " + formula + ", data = " + df_object + ", family = " + family + ")\\n\\n");
 
     var journal = getValue("drp_journal");
     var compact = getValue("cbox_compact");
     var printer = getValue("drp_printer");
     var convert_save = getValue("drp_save_conversion");
+    var lang = getValue("drp_lang");
+    var dec_mark = getValue("inp_dec_mark");
+    var big_mark = getValue("inp_big_mark");
 
     if(journal && journal != "none") { echo("gtsummary::theme_gtsummary_journal(journal = \\"" + journal + "\\");\\n"); }
     if(compact == "1") { echo("gtsummary::theme_gtsummary_compact();\\n"); }
     if(printer && printer != "none") { echo("gtsummary::theme_gtsummary_printer(print_engine = \\"" + printer + "\\");\\n"); }
 
-    echo("# 2. Create the gtsummary regression table\\n");
+    var lang_opts = new Array();
+    if(lang) { lang_opts.push("language = \\"" + lang + "\\""); }
+    if(dec_mark) { lang_opts.push("decimal.mark = \\"" + dec_mark + "\\""); }
+    if(big_mark) { lang_opts.push("big.mark = \\"" + big_mark + "\\""); }
+    if(lang_opts.length > 0) { echo("gtsummary::theme_gtsummary_language(" + lang_opts.join(", ") + ");\\n"); }
+
     var exp_arg = getValue("cbox_glm_exp") == "TRUE" ? "exponentiate = TRUE" : "exponentiate = FALSE";
-    echo("std_reg_table <- gtsummary::tbl_regression(std_model, " + exp_arg + ")");
 
-    if(getValue("cbox_glm_global_p") == "TRUE"){ echo(" %>%\\n  gtsummary::add_global_p()"); }
-    if(getValue("cbox_glm_glance") == "TRUE"){ echo(" %>%\\n  gtsummary::add_glance_table()"); }
+    // ---> INYECCIÓN: Construir pipeline de tbl_regression como variable JS <---
+    var reg_pipeline = "gtsummary::tbl_regression(" + exp_arg + ")";
+    if(getValue("cbox_glm_global_p") == "TRUE"){ reg_pipeline += " %>%\\n      gtsummary::add_global_p()"; }
+    if(getValue("cbox_glm_glance") == "TRUE"){ reg_pipeline += " %>%\\n      gtsummary::add_glance_table()"; }
 
+    var conversion_suffix = "";
+    if(convert_save == "gt") conversion_suffix = " %>%\\n  gtsummary::as_gt()";
+    if(convert_save == "flextable") conversion_suffix = " %>%\\n  gtsummary::as_flex_table()";
+    if(convert_save == "huxtable") conversion_suffix = " %>%\\n  gtsummary::as_hux_table()";
+
+    var is_split = getValue("cbox_glm_split") == "1";
+    var split_var_raw = getValue("var_glm_strata");
+
+    if (is_split && split_var_raw != "") {
+        var split_var = getColumnName(split_var_raw);
+        echo("# 1. Fit models by group and create stratified table\\n");
+        echo("std_reg_table <- " + df_object + " %>%\\n");
+        echo("  gtsummary::tbl_strata(\\n");
+        echo("    strata = " + split_var + ",\\n");
+        echo("    .tbl_fun = ~ .x %>% glm(formula = " + formula + ", data = ., family = " + family + ") %>%\\n");
+        echo("      " + reg_pipeline + "\\n");
+        echo("  )" + conversion_suffix + "\\n\\n");
+    } else {
+        echo("# 1. Fit the standard regression model\\n");
+        echo("std_model <- glm(formula = " + formula + ", data = " + df_object + ", family = " + family + ")\\n\\n");
+        echo("# 2. Create the gtsummary regression table\\n");
+        echo("std_reg_table <- std_model %>%\\n  " + reg_pipeline + conversion_suffix + "\\n\\n");
+    }
+  '
+
+  js_glm_printout <- '
+    echo("rk.header(\\"Standard Regression Table (glm & tbl_regression)\\", level=3);\\n");
+    echo("print(std_reg_table);\\n");
+
+    if(getValue("sav_glm_model.active") || getValue("sav_glm_table.active")) { echo("rk.print(\\"<hr>\\")\\n"); }
+    if(getValue("sav_glm_model.active") && getValue("cbox_glm_split") != "1"){
+        echo("rk.print(paste0(\\"<b>glm model saved as: </b><code>\\", \\"" + getValue("sav_glm_model") + "\\", \\"</code><br>\\"))\\n");
+    }
+    if(getValue("sav_glm_table.active")){
+        echo("rk.print(paste0(\\"<b>gtsummary table saved as: </b><code>\\", \\"" + getValue("sav_glm_table") + "\\", \\"</code>\\"))\\n");
+    }
+  '
+
+  glm_component <- rk.plugin.component(
+    "Standard Regression Model (glm)",
+    xml = list(dialog = glm_dialog, logic = glm_logic),
+    js = list(require = c("gtsummary"), calculate = js_glm_logic, printout = js_glm_printout),
+    hierarchy = list("analysis", "gt Summaries")
+  )
+
+  # =========================================================================================
+  # COMPONENT 5 DEFINITION: Generic tbl_regression (For Pre-existing Models)
+  # =========================================================================================
+  gen_selector <- rk.XML.varselector(id.name = "slc_gen_mod")
+
+  # Acepta las clases de modelos más populares
+  gen_model <- rk.XML.varslot(
+    id.name = "var_gen_model",
+    label = "Select Model from Workspace",
+    source = "slc_gen_mod",
+    classes = c("lm", "glm", "svyglm", "coxph", "survreg", "merMod", "glmerMod", "multinom", "polr", "geeglm", "lme"),
+    required = TRUE
+  )
+
+  gen_exp <- rk.XML.cbox(id.name = "cbox_gen_exp", label = "Exponentiate coefficients (e.g., for Odds Ratios or Hazard Ratios)", value = "TRUE", chk = FALSE)
+  gen_glance <- rk.XML.cbox(id.name = "cbox_gen_glance", label = "Add model fit statistics at bottom (N, AIC, R²)", value = "TRUE", chk = TRUE)
+  gen_global_p <- rk.XML.cbox(id.name = "cbox_gen_global_p", label = "Add global p-values for categorical predictors (Wald/ANOVA)", value = "TRUE", chk = FALSE)
+
+  gen_save_table <- rk.XML.saveobj(id.name = "sav_gen_table", label = "Save gtsummary table object as:", chk = TRUE, initial = "model_table")
+
+  # Reutilizamos la pestaña de temas (themes_tab_content) y conversión de salidas
+  gen_tabbook <- rk.XML.tabbook(tabs = list(
+    "Model Selection & Options" = rk.XML.col(
+      gen_model, gen_exp, gen_glance, gen_global_p, rk.XML.stretch()
+    ),
+    "Themes & Formatting" = themes_tab_content,
+    "Output" = rk.XML.col(
+      rk.XML.frame(save_conversion_dropdown, label="Output Format"),
+      rk.XML.frame(gen_save_table, label="Save Object"),
+      rk.XML.stretch()
+    )
+  ))
+
+  gen_dialog <- rk.XML.dialog(
+    label = "Table for Existing Models (tbl_regression)",
+    child = rk.XML.row(rk.XML.col(gen_selector), rk.XML.col(gen_tabbook))
+  )
+
+  # --- Javascript ---
+  js_gen_logic <- '
+    var model = getValue("var_gen_model");
+    if(!model) return;
+
+    echo("require(gtsummary)\\n\\n");
+
+    // Reutilizamos la lógica de temas, idiomas y formatos
+    var journal = getValue("drp_journal");
+    var compact = getValue("cbox_compact");
+    var printer = getValue("drp_printer");
+    var convert_save = getValue("drp_save_conversion");
+
+    var lang = getValue("drp_lang");
+    var dec_mark = getValue("inp_dec_mark");
+    var big_mark = getValue("inp_big_mark");
+
+    if(journal && journal != "none") { echo("gtsummary::theme_gtsummary_journal(journal = \\"" + journal + "\\");\\n"); }
+    if(compact == "1") { echo("gtsummary::theme_gtsummary_compact();\\n"); }
+    if(printer && printer != "none") { echo("gtsummary::theme_gtsummary_printer(print_engine = \\"" + printer + "\\");\\n"); }
+
+    var lang_opts = new Array();
+    if(lang) { lang_opts.push("language = \\"" + lang + "\\""); }
+    if(dec_mark) { lang_opts.push("decimal.mark = \\"" + dec_mark + "\\""); }
+    if(big_mark) { lang_opts.push("big.mark = \\"" + big_mark + "\\""); }
+    if(lang_opts.length > 0) { echo("gtsummary::theme_gtsummary_language(" + lang_opts.join(", ") + ");\\n"); }
+
+    // Generar la tabla leyendo el modelo directamente
+    echo("# Create the gtsummary table directly from the existing model\\n");
+    var exp_arg = getValue("cbox_gen_exp") == "TRUE" ? "exponentiate = TRUE" : "exponentiate = FALSE";
+
+    echo("model_table <- gtsummary::tbl_regression(" + model + ", " + exp_arg + ")");
+
+    if(getValue("cbox_gen_global_p") == "TRUE"){ echo(" %>%\\n  gtsummary::add_global_p()"); }
+     if(getValue("cbox_gen_glance") == "TRUE"){
+        echo(" %>%\\n  gtsummary::add_glance_table(\\n");
+        echo("    glance_fun = function(x) {\\n");
+        echo("      gl <- tryCatch(broom::glance(x), error = function(e) data.frame())\\n");
+        echo("      if(inherits(x, \\\"svyglm\\\")) {\\n");
+        echo("        if(x$family$family == \\\"gaussian\\\") {\\n");
+        echo("          gl$r.squared <- 1 - (x$deviance / x$null.deviance)\\n");
+        echo("        } else if (x$family$family %in% c(\\\"binomial\\\", \\\"quasibinomial\\\")) {\\n");
+        echo("          try(gl$pseudo.r.squared <- survey::psrsq(x), silent = TRUE)\\n");
+        echo("        }\\n");
+        echo("      }\\n");
+        echo("      gl\\n");
+        echo("    }\\n");
+        echo("  )");
+    }
+
+    // Aplicar conversiones si el usuario lo solicita
     var conversion_suffix = "";
     if(convert_save == "gt") conversion_suffix = " %>%\\n  gtsummary::as_gt()";
     if(convert_save == "flextable") conversion_suffix = " %>%\\n  gtsummary::as_flex_table()";
@@ -727,18 +950,19 @@ local({
     echo(conversion_suffix + "\\n\\n");
   '
 
-  js_glm_printout <- '
-    echo("rk.header(\\"Standard Regression Table (glm & tbl_regression)\\", level=3);\\n");
-    echo("print(std_reg_table);\\n");
+  js_gen_printout <- '
+    echo("rk.header(\\"Summary Table for Existing Model (tbl_regression)\\", level=3);\\n");
+    echo("print(model_table);\\n");
 
-    if(getValue("sav_glm_model.active") || getValue("sav_glm_table.active")) { echo("rk.print(\\"<hr>\\")\\n"); }
-    if(getValue("sav_glm_model.active")){ echo("rk.print(paste0(\\"<b>glm model saved as: </b><code>\\", \\"" + getValue("sav_glm_model") + "\\", \\"</code><br>\\"))\\n"); }
-    if(getValue("sav_glm_table.active")){ echo("rk.print(paste0(\\"<b>gtsummary table saved as: </b><code>\\", \\"" + getValue("sav_glm_table") + "\\", \\"</code>\\"))\\n"); }
+    if(getValue("sav_gen_table.active")){
+       echo("rk.print(\\"<hr>\\")\\n");
+       echo("rk.print(paste0(\\"<b>gtsummary table saved as: </b><code>\\", \\"" + getValue("sav_gen_table") + "\\", \\"</code>\\"))\\n");
+    }
   '
 
-  glm_component <- rk.plugin.component(
-    "Standard Regression Model (glm)", xml = list(dialog = glm_dialog),
-    js = list(require = c("gtsummary"), calculate = js_glm_logic, printout = js_glm_printout),
+  gen_mod_component <- rk.plugin.component(
+    "Table for Existing Models (tbl_regression)", xml = list(dialog = gen_dialog),
+    js = list(require = c("gtsummary"), calculate = js_gen_logic, printout = js_gen_printout),
     hierarchy = list("analysis", "gt Summaries")
   )
 
@@ -750,7 +974,7 @@ local({
 
   plugin.dir <- rk.plugin.skeleton(
     about = package_about, path = ".",
-    xml = list(dialog = tbl_summary_dialog),
+    xml = list(dialog = tbl_summary_dialog, logic = tbl_summary_logic),
     js = list(
       require = "gtsummary", calculate = js_tbl_summary_logic, printout = js_tbl_summary_printout,
       results.header = "Summary Tables (gtsummary)"
@@ -760,7 +984,7 @@ local({
       name = "Summary Table (gtsummary)",
       hierarchy = list("analysis", "gt Summaries")
     ),
-     components = list(svy_summary_component, reg_svy_component, glm_component),
+    components = list(svy_summary_component, reg_svy_component, glm_component, gen_mod_component),
     create = c("pmap", "xml", "js", "desc", "rkh"), load = TRUE, overwrite = TRUE, show = FALSE
   )
 

@@ -23,6 +23,11 @@
 		</setting>
 		<setting id="drp_reg_family">
 		</setting>
+		<setting id="cbox_reg_split">
+		</setting>
+		<caption id="frm_reg_split" />
+		<setting id="var_reg_strata">
+		</setting>
 		<caption id="tab_TblOptns" />
 		<setting id="cbox_reg_exp">
 		</setting>

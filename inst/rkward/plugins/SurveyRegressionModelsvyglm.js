@@ -15,7 +15,6 @@ function calculate(is_preview){
 	// the R code to be evaluated
 
     var svy_object = getValue("var_reg_svy_data");
-    // Obtenemos los nombres puros de las variables
     var dep_raw = getValue("var_reg_dep").split("\n").filter(function(n){ return n != "" })[0];
     var indeps_raw = getValue("var_reg_indep").split("\n").filter(function(n){ return n != "" });
     var family = getValue("drp_reg_family");
@@ -37,21 +36,14 @@ function calculate(is_preview){
 
     var dep = getColumnName(dep_raw);
     var indep_names = indeps_raw.map(function(item) { return getColumnName(item); });
-
-    // Construimos la fórmula Y ~ X1 + X2
     var formula = "`" + dep + "` ~ `" + indep_names.join("` + `") + "`";
 
     echo("require(survey)\nrequire(gtsummary)\n\n");
-    echo("# 1. Fit the survey-weighted regression model\n");
-    echo("svy_model <- survey::svyglm(formula = " + formula + ", design = " + svy_object + ", family = " + family + ")\n\n");
 
-    // Lógica de Temas compartida
     var journal = getValue("drp_journal");
     var compact = getValue("cbox_compact");
     var printer = getValue("drp_printer");
     var convert_save = getValue("drp_save_conversion");
-
-    // NUEVO: Leemos los valores del idioma y decimales
     var lang = getValue("drp_lang");
     var dec_mark = getValue("inp_dec_mark");
     var big_mark = getValue("inp_big_mark");
@@ -60,36 +52,31 @@ function calculate(is_preview){
     if(compact == "1") { echo("gtsummary::theme_gtsummary_compact();\n"); }
     if(printer && printer != "none") { echo("gtsummary::theme_gtsummary_printer(print_engine = \"" + printer + "\");\n"); }
 
-    // NUEVO: Aplicamos el tema de idioma a gtsummary
     var lang_opts = new Array();
     if(lang) { lang_opts.push("language = \"" + lang + "\""); }
     if(dec_mark) { lang_opts.push("decimal.mark = \"" + dec_mark + "\""); }
     if(big_mark) { lang_opts.push("big.mark = \"" + big_mark + "\""); }
     if(lang_opts.length > 0) { echo("gtsummary::theme_gtsummary_language(" + lang_opts.join(", ") + ");\n"); }
 
-    echo("# 2. Create the gtsummary regression table\n");
     var exp_arg = getValue("cbox_reg_exp") == "TRUE" ? "exponentiate = TRUE" : "exponentiate = FALSE";
-    echo("svy_reg_table <- gtsummary::tbl_regression(svy_model, " + exp_arg + ")");
 
+    // ---> INYECCIÓN: Construir pipeline de tbl_regression como variable JS <---
+    var reg_pipeline = "gtsummary::tbl_regression(" + exp_arg + ")";
     if(getValue("cbox_reg_global_p") == "TRUE"){
-        echo(" %>%\n  gtsummary::add_global_p()");
+        reg_pipeline += " %>%\n      gtsummary::add_global_p()";
     }
-
-    // MAGIA DE ESTADÍSTICAS DEL MODELO: Inyectamos el cálculo manual del R2 para svyglm
     if(getValue("cbox_reg_glance") == "TRUE"){
-        echo(" %>%\n  gtsummary::add_glance_table(\n");
-        echo("    glance_fun = function(x) {\n");
-        echo("      gl <- broom::glance(x)\n");
-        echo("      if(x$family$family == \"gaussian\") {\n");
-        // R2 tradicional para regresión lineal de encuestas
-        echo("        gl$r.squared <- 1 - (x$deviance / x$null.deviance)\n");
-        echo("      } else if (x$family$family %in% c(\"binomial\", \"quasibinomial\")) {\n");
-        // Pseudo-R2 de Nagelkerke para regresión logística
-        echo("        try(gl$pseudo.r.squared <- survey::psrsq(x), silent = TRUE)\n");
-        echo("      }\n");
-        echo("      gl\n");
-        echo("    }\n");
-        echo("  )");
+        reg_pipeline += " %>%\n      gtsummary::add_glance_table(\n";
+        reg_pipeline += "        glance_fun = function(x) {\n";
+        reg_pipeline += "          gl <- broom::glance(x)\n";
+        reg_pipeline += "          if(x$family$family == \"gaussian\") {\n";
+        reg_pipeline += "            gl$r.squared <- 1 - (x$deviance / x$null.deviance)\n";
+        reg_pipeline += "          } else if (x$family$family %in% c(\"binomial\", \"quasibinomial\")) {\n";
+        reg_pipeline += "            try(gl$pseudo.r.squared <- survey::psrsq(x), silent = TRUE)\n";
+        reg_pipeline += "          }\n";
+        reg_pipeline += "          gl\n";
+        reg_pipeline += "        }\n";
+        reg_pipeline += "      )";
     }
 
     var conversion_suffix = "";
@@ -97,7 +84,24 @@ function calculate(is_preview){
     if(convert_save == "flextable") conversion_suffix = " %>%\n  gtsummary::as_flex_table()";
     if(convert_save == "huxtable") conversion_suffix = " %>%\n  gtsummary::as_hux_table()";
 
-    echo(conversion_suffix + "\n\n");
+    var is_split = getValue("cbox_reg_split") == "1";
+    var split_var_raw = getValue("var_reg_strata");
+
+    if (is_split && split_var_raw != "") {
+        var split_var = getColumnName(split_var_raw);
+        echo("# 1. Fit survey models by group and create stratified table\n");
+        echo("svy_reg_table <- " + svy_object + " %>%\n");
+        echo("  gtsummary::tbl_strata(\n");
+        echo("    strata = " + split_var + ",\n");
+        echo("    .tbl_fun = ~ .x %>% survey::svyglm(formula = " + formula + ", design = ., family = " + family + ") %>%\n");
+        echo("      " + reg_pipeline + "\n");
+        echo("  )" + conversion_suffix + "\n\n");
+    } else {
+        echo("# 1. Fit the survey-weighted regression model\n");
+        echo("svy_model <- survey::svyglm(formula = " + formula + ", design = " + svy_object + ", family = " + family + ")\n\n");
+        echo("# 2. Create the gtsummary regression table\n");
+        echo("svy_reg_table <- svy_model %>%\n  " + reg_pipeline + conversion_suffix + "\n\n");
+    }
   
 }
 
@@ -111,7 +115,7 @@ function printout(is_preview){
     if(getValue("sav_reg_model.active") || getValue("sav_reg_table.active")) {
        echo("rk.print(\"<hr>\")\n");
     }
-    if(getValue("sav_reg_model.active")){
+    if(getValue("sav_reg_model.active") && getValue("cbox_reg_split") != "1"){
       echo("rk.print(paste0(\"<b>svyglm model saved as: </b><code>\", \"" + getValue("sav_reg_model") + "\", \"</code><br>\"))\n");
     }
     if(getValue("sav_reg_table.active")){

@@ -12,6 +12,7 @@
 	-->
 	<logic>
 		<connect governor="var_glm_data.available" client="slc_glm.root" />
+		<connect governor="cbox_glm_split.state" client="frm_glm_split.visible" />
 	</logic>
 	<dialog label="Standard Regression Model (glm &amp; tbl_regression)">
 		<row id="row_cSDFSDFMCM">
@@ -30,6 +31,10 @@
 								<option label="Binomial (Logistic Regression / Odds Ratios)" value="binomial()" />
 								<option label="Poisson (Count Data)" value="poisson()" />
 							</dropdown>
+							<checkbox id="cbox_glm_split" label="Run model by groups (Split Analysis / Stratify)" value="1" />
+							<frame id="frm_glm_split">
+								<varslot id="var_glm_strata" label="Stratification Variable" source="slc_glm" />
+							</frame>
 							<stretch />
 						</column>
 					</tab>

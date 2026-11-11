@@ -22,6 +22,7 @@
 	       }
 	    }
 		</script>
+		<connect governor="cbox_reg_split.state" client="frm_reg_split.visible" />
 	</logic>
 	<dialog label="Survey Regression Model (svyglm &amp; tbl_regression)">
 		<row id="row_cSSMCMCSDV">
@@ -40,6 +41,10 @@
 								<option label="Quasi-binomial (Logistic Reg. / Odds Ratios)" value="quasibinomial()" />
 								<option label="Quasi-poisson (Count Data)" value="quasipoisson()" />
 							</dropdown>
+							<checkbox id="cbox_reg_split" label="Run model by groups (Split Analysis / Stratify)" value="1" />
+							<frame id="frm_reg_split">
+								<varslot id="var_reg_strata" label="Stratification Variable" source="slc_reg_svy" />
+							</frame>
 							<stretch />
 						</column>
 					</tab>

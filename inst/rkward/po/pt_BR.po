@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: rk.gtsummary 0.2.0\n"
+"Project-Id-Version: rk.gtsummary 0.2.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-26 20:00+0000\n"
 "PO-Revision-Date: 2026-11-09 11:08-0600\n"
@@ -397,3 +397,9 @@ msgstr "Modelo de Regressão Padrão (glm)"
 
 msgid "Standard Regression Table (glm & tbl_regression)"
 msgstr "Tabela de Regressão Padrão (glm e tbl_regression)"
+
+msgid "Run model by groups (Split Analysis / Stratify)"
+msgstr "Executar modelo por grupos (Análise dividida / Estratificar)"
+
+msgid "Stratification Variable"
+msgstr "Variável de estratificação"

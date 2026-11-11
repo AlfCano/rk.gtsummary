@@ -1,6 +1,6 @@
 # rk.gtsummary: Publication-Ready Summary & Regression Tables for RKWard
 
-![Version](https://img.shields.io/badge/Version-0.2.0-blue.svg)
+![Version](https://img.shields.io/badge/Version-0.2.1-blue.svg)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 ![RKWard](https://img.shields.io/badge/Platform-RKWard-green)
 [![R Linter](https://github.com/AlfCano/rk.gtsummary/actions/workflows/lintr.yml/badge.svg)](https://github.com/AlfCano/rk.gtsummary/actions/workflows/lintr.yml)
@@ -11,6 +11,12 @@
 `rk.gtsummary` empowers researchers to generate beautiful, highly customizable, and publication-ready tables directly from the RKWard GUI. Whether you are summarizing simple data frames or running predictive regression models on complex, weighted survey designs (like IPUMS or demographic censuses), this plugin handles the heavy lifting, formatting, and statistical extraction automatically.
 
 ---
+
+## 🚀 What's New in Version 0.2.1
+
+*   **Automated Split-File Analysis (`tbl_strata`):** Addressed a historical limitation of R GUIs by introducing a one-click "Split Analysis" feature for Regression Models (`glm` and `svyglm`). You can now automatically fit separate models for different subgroups (e.g., by Country or Gender) and merge them side-by-side into a single, publication-ready comparative table.
+*   **Dynamic UI (Auto-Focus & Decluttering):** Implemented smart UI logic across all components. Stratification variable slots remain hidden until the "Split Analysis" option is activated, keeping the interface clean and approachable for beginners.
+*   **Nagelkerke Pseudo-R² for Complex Surveys:** Enhanced the `svyglm` glance statistics engine. The plugin now automatically catches logistic regression survey designs (`quasibinomial`) and seamlessly injects `survey::psrsq()` to calculate and display the Pseudo-R² alongside other model metrics.
 
 ## 🚀 What's New in Version 0.2.0 (The Regression Update)
 

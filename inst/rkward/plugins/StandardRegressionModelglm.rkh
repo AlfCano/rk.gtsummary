@@ -23,6 +23,11 @@
 		</setting>
 		<setting id="drp_glm_family">
 		</setting>
+		<setting id="cbox_glm_split">
+		</setting>
+		<caption id="frm_glm_split" />
+		<setting id="var_glm_strata">
+		</setting>
 		<caption id="tab_TblOptns" />
 		<setting id="cbox_glm_exp">
 		</setting>
